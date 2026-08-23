@@ -193,6 +193,16 @@ body {
   margin: 0.4rem 0 0;
 }
 
+.contenido-texto {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0.4rem 0;
+}
+
+.contenido-texto strong {
+  color: var(--azul-oscuro);
+}
+
 /* Footer */
 .app-footer {
   text-align: center;
