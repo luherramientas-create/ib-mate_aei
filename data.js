@@ -14,7 +14,7 @@ const FORMULAS = [
     tema: 1,
     temaNombre: "Aritmética y álgebra",
     subtema: "Progresiones aritméticas",
-    nombre: "El n-ésimo término de una progresión aritmética",
+    nombre: "El \\(n\\)-ésimo término de una progresión aritmética",
     latex: "u_n = u_1 + (n-1)d",
     notas: "",
     paginaPDF: 2
@@ -24,7 +24,7 @@ const FORMULAS = [
     tema: 1,
     temaNombre: "Aritmética y álgebra",
     subtema: "Progresiones aritméticas",
-    nombre: "La suma de los n primeros términos de una progresión aritmética",
+    nombre: "La suma de los \\(n\\) primeros términos de una progresión aritmética",
     latex: "S_n = \\frac{n}{2}\\big(2u_1 + (n-1)d\\big) \\; ; \\; S_n = \\frac{n}{2}(u_1 + u_n)",
     notas: "",
     paginaPDF: 2
@@ -34,7 +34,7 @@ const FORMULAS = [
     tema: 1,
     temaNombre: "Aritmética y álgebra",
     subtema: "Progresiones geométricas",
-    nombre: "El n-ésimo término de una progresión geométrica",
+    nombre: "El \\(n\\)-ésimo término de una progresión geométrica",
     latex: "u_n = u_1 r^{\\,n-1}",
     notas: "",
     paginaPDF: 2
@@ -44,7 +44,7 @@ const FORMULAS = [
     tema: 1,
     temaNombre: "Aritmética y álgebra",
     subtema: "Progresiones geométricas",
-    nombre: "La suma de los n primeros términos de una progresión geométrica",
+    nombre: "La suma de los \\(n\\) primeros términos de una progresión geométrica",
     latex: "S_n = \\frac{u_1(r^n - 1)}{r - 1} = \\frac{u_1(1 - r^n)}{1 - r}, \\; r \\neq 1",
     notas: "",
     paginaPDF: 2
@@ -375,7 +375,7 @@ const FORMULAS = [
   {
     id: "4.7", tema: 4, temaNombre: "Estadística y probabilidad",
     subtema: "Variables aleatorias",
-    nombre: "Valor esperado de una variable aleatoria discreta X",
+    nombre: "Valor esperado de una variable aleatoria discreta \\(X\\)",
     latex: "E(X) = \\sum_{i=1}^{k} x_i \\, P(X = x_i)",
     notas: "",
     paginaPDF: 5
@@ -417,7 +417,7 @@ const FORMULAS = [
   {
     id: "5.5b", tema: 5, temaNombre: "Análisis",
     subtema: "Integrales",
-    nombre: "Área entre una curva y el eje x",
+    nombre: "Área entre una curva y el eje \\(x\\)",
     latex: "A = \\int_a^b y \\, dx",
     notas: "donde \\(y = f(x)\\) y \\(f(x) > 0\\)",
     paginaPDF: 6
