@@ -78,7 +78,7 @@ const FORMULAS = [
     latex: "\\varepsilon = \\left| \\frac{v_A - v_E}{v_E} \\right| \\times 100\\%",
     notas: "donde \\(v_E\\) es el valor exacto y \\(v_A\\) es el valor aproximado de \\(v\\).",
     paginaPDF: 2
-  }
+  },
 
   // Temas 2-5 se agregan en el Paso 5, una vez validado el render de este tema.
 
