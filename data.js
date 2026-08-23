@@ -56,7 +56,7 @@ const FORMULAS = [
     subtema: "Interés compuesto",
     nombre: "Interés compuesto",
     latex: "FV = PV \\times \\left(1 + \\frac{r}{100k}\\right)^{kn}",
-    notas: "FV es el valor futuro, PV es el valor presente (actual), n es el número de años, k es el número de períodos de composición del interés que hay en un año, r% es el tipo de interés nominal anual.",
+    notas: "\\(FV\\) es el valor futuro, \\(PV\\) es el valor presente (actual), \\(n\\) es el número de años, \\(k\\) es el número de períodos de composición del interés que hay en un año, \\(r\\)% es el tipo de interés nominal anual.",
     paginaPDF: 2
   },
   {
@@ -66,7 +66,7 @@ const FORMULAS = [
     subtema: "Potencias y logaritmos",
     nombre: "Potencias y logaritmos",
     latex: "a^x = b \\; \\Leftrightarrow \\; x = \\log_a b",
-    notas: "donde a > 0, b > 0, a \\neq 1",
+    notas: "donde \\(a > 0\\), \\(b > 0\\), \\(a \\neq 1\\)",
     paginaPDF: 2
   },
   {
@@ -76,7 +76,7 @@ const FORMULAS = [
     subtema: "Porcentaje de error",
     nombre: "Porcentaje de error",
     latex: "\\varepsilon = \\left| \\frac{v_A - v_E}{v_E} \\right| \\times 100\\%",
-    notas: "donde v_E es el valor exacto y v_A es el valor aproximado de v.",
+    notas: "donde \\(v_E\\) es el valor exacto y \\(v_A\\) es el valor aproximado de \\(v\\).",
     paginaPDF: 2
   }
 
