@@ -2,8 +2,22 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const contenedor = document.getElementById("contenido");
-  // Por ahora renderizamos Tema 1 directo, sin esperar clic de navegación.
-  // La navegación funcional entre los 5 temas se conecta en el Paso 4.
+  const botones = document.querySelectorAll(".tema-btn");
+
+  botones.forEach(boton => {
+    boton.addEventListener("click", () => {
+      const temaNum = parseInt(boton.dataset.tema, 10);
+
+      // Marcar botón activo
+      botones.forEach(b => b.classList.remove("activo"));
+      boton.classList.add("activo");
+
+      renderTema(temaNum, contenedor);
+    });
+  });
+
+  // Tema 1 se muestra por defecto al cargar la página
+  botones[0].classList.add("activo");
   renderTema(1, contenedor);
 });
 
@@ -22,7 +36,7 @@ function renderTema(temaNum, contenedor) {
   contenedor.innerHTML = "";
 
   if (formulas.length === 0) {
-    contenedor.innerHTML = '<p class="placeholder">Este tema todavía no tiene contenido.</p>';
+    contenedor.innerHTML = '<p class="placeholder">Próximamente — este tema todavía no tiene contenido cargado.</p>';
     return;
   }
 
