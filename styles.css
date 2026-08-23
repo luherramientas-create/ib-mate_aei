@@ -23,6 +23,7 @@ body {
   color: var(--blanco);
   padding: 1.25rem 1rem;
   text-align: center;
+  position: relative;
 }
 
 .app-header h1 {
@@ -34,6 +35,56 @@ body {
   margin: 0.25rem 0 0;
   font-size: 0.9rem;
   color: var(--azul-claro);
+}
+
+.volver-inicio {
+  position: absolute;
+  left: 1rem;
+  top: 1.25rem;
+  color: var(--azul-claro);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.volver-inicio:hover {
+  text-decoration: underline;
+}
+
+/* Portada / hub */
+.hub {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1.5rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hub-card {
+  display: block;
+  background: var(--blanco);
+  border: 2px solid var(--azul-medio);
+  border-radius: 10px;
+  padding: 1.25rem;
+  text-decoration: none;
+  color: var(--texto);
+  transition: background 0.15s ease;
+}
+
+.hub-card:hover {
+  background: var(--azul-claro);
+}
+
+.hub-card h2 {
+  margin: 0 0 0.5rem;
+  color: var(--azul-oscuro);
+  font-size: 1.1rem;
+}
+
+.hub-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--azul-medio);
 }
 
 /* Nav de temas */
@@ -96,6 +147,50 @@ body {
   color: var(--azul-medio);
   text-align: center;
   margin-top: 2rem;
+}
+
+/* Bloques de fórmula */
+.formula-bloque {
+  border-bottom: 1px solid var(--azul-claro);
+  padding: 1rem 0;
+}
+
+.formula-bloque:last-child {
+  border-bottom: none;
+}
+
+.formula-encabezado {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.formula-id {
+  background: var(--azul-oscuro);
+  color: var(--blanco);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.formula-nombre {
+  font-weight: bold;
+  color: var(--azul-oscuro);
+}
+
+.formula-latex {
+  overflow-x: auto;
+  padding: 0.5rem 0;
+}
+
+.formula-notas {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 0.4rem 0 0;
 }
 
 /* Footer */

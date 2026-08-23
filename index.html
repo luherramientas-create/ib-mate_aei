@@ -5,11 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repaso IB Matemáticas — Lu Herramientas</title>
   <link rel="stylesheet" href="styles.css">
-
-  <!-- KaTeX: render de fórmulas -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body>
 
@@ -18,23 +13,26 @@
     <p class="subtitle">Aplicaciones e Interpretación — Nivel Medio</p>
   </header>
 
-  <nav class="tema-nav">
-    <button class="tema-btn" data-tema="1">Tema 1<span>Aritmética y álgebra</span></button>
-    <button class="tema-btn" data-tema="2">Tema 2<span>Funciones</span></button>
-    <button class="tema-btn" data-tema="3">Tema 3<span>Geometría y trigonometría</span></button>
-    <button class="tema-btn" data-tema="4">Tema 4<span>Estadística y probabilidad</span></button>
-    <button class="tema-btn" data-tema="5">Tema 5<span>Análisis</span></button>
-  </nav>
+  <main class="hub">
+    <a class="hub-card" href="formulas/index.html">
+      <h2>Cuadernillo de fórmulas</h2>
+      <p>Todas las fórmulas oficiales de AI NM, organizadas por tema y renderizadas con notación matemática.</p>
+    </a>
 
-  <main id="contenido" class="contenido">
-    <p class="placeholder">Cargando...</p>
+    <a class="hub-card" href="contenidos/index.html">
+      <h2>Contenidos</h2>
+      <p>El temario oficial de la asignatura: qué cubre cada subtema y aclaraciones importantes para el examen.</p>
+    </a>
+
+    <a class="hub-card" href="ejercicios/index.html">
+      <h2>Ejercicios de práctica</h2>
+      <p>Banco de ejercicios por tema, con retroalimentación progresiva.</p>
+    </a>
   </main>
 
   <footer class="app-footer">
-    <p>Lu Herramientas — material de apoyo, no reemplaza el cuadernillo oficial del IB.</p>
+    <p>Lu Herramientas — material de apoyo para estudiantes de IB Matemáticas AI NM.</p>
   </footer>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
 </body>
 </html>
