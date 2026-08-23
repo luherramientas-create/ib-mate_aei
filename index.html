@@ -4,34 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repaso IB Matemáticas — Lu Herramientas</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-      background: #DDEAF5;
-      color: #1F4E79;
-      text-align: center;
-      padding: 2rem;
-      box-sizing: border-box;
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin-bottom: 0.5rem;
-    }
-    p {
-      color: #2E74B5;
-      font-size: 1rem;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div>
+
+  <header class="app-header">
     <h1>Repaso IB Matemáticas</h1>
-    <p>Lu Herramientas — en construcción 🚧</p>
-  </div>
+    <p class="subtitle">Aplicaciones e Interpretación — Nivel Medio</p>
+  </header>
+
+  <nav class="tema-nav">
+    <button class="tema-btn" data-tema="1">Tema 1<span>Aritmética y álgebra</span></button>
+    <button class="tema-btn" data-tema="2">Tema 2<span>Funciones</span></button>
+    <button class="tema-btn" data-tema="3">Tema 3<span>Geometría y trigonometría</span></button>
+    <button class="tema-btn" data-tema="4">Tema 4<span>Estadística y probabilidad</span></button>
+    <button class="tema-btn" data-tema="5">Tema 5<span>Análisis</span></button>
+  </nav>
+
+  <main id="contenido" class="contenido">
+    <p class="placeholder">Seleccione un tema para ver sus fórmulas.</p>
+  </main>
+
+  <footer class="app-footer">
+    <p>Lu Herramientas — material de apoyo, no reemplaza el cuadernillo oficial del IB.</p>
+  </footer>
+
 </body>
 </html>
