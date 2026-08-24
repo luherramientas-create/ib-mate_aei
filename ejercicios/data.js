@@ -851,3 +851,135 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.7 (Amortización y anualidades) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.7-001",
+    subtema: "1.7",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const pago = entero(20, 100) * 1000;
+      const r = entero(3, 9);
+      const n = entero(12, 36);
+      const i = r / 1200; // tasa mensual
+      return { nombre, pago, r, n, i };
+    },
+    contexto: (p) => `${p.nombre} deposita ${p.pago.toLocaleString('es-CR')} colones al final de cada mes en una cuenta de ahorros que paga una tasa de interés anual nominal del ${p.r}%, capitalizada mensualmente.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el monto acumulado en la cuenta después de ${p.n} meses.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.pago * (Math.pow(1 + p.i, p.n) - 1) / p.i,
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "El monto acumulado de depósitos regulares se calcula con la fórmula de una anualidad: \\(FV = PMT \\times \\dfrac{(1+i)^n - 1}{i}\\), donde \\(i\\) es la tasa de interés por período (mensual, en este caso).",
+        pista2: (p) => `Aquí \\(PMT=${p.pago}\\), \\(i=\\dfrac{${p.r}}{1200}=${p.i.toFixed(5)}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => {
+          const fv = p.pago * (Math.pow(1 + p.i, p.n) - 1) / p.i;
+          return `FV = ${p.pago} \\times \\dfrac{(1+${p.i.toFixed(5)})^{${p.n}}-1}{${p.i.toFixed(5)}} = ${redondearCifrasSignificativas(fv, 3)}`;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.7-002",
+    subtema: "1.7",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const monto = entero(1000, 5000) * 1000;
+      const r = entero(8, 18);
+      const n = entero(12, 48);
+      const i = r / 1200;
+      return { nombre, monto, r, n, i };
+    },
+    contexto: (p) => `${p.nombre} solicita un préstamo de ${p.monto.toLocaleString('es-CR')} colones para comprar un vehículo, a una tasa de interés anual nominal del ${p.r}%, capitalizada mensualmente, a pagar en ${p.n} meses.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `la cuota mensual que debe pagar ${p.nombre}.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.monto * p.i / (1 - Math.pow(1 + p.i, -p.n)),
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Use la fórmula de la cuota de un préstamo con pagos regulares: \\(PMT = \\dfrac{PV \\times i}{1-(1+i)^{-n}}\\).",
+        pista2: (p) => `Aquí \\(PV=${p.monto}\\), \\(i=\\dfrac{${p.r}}{1200}=${p.i.toFixed(5)}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => {
+          const pmt = p.monto * p.i / (1 - Math.pow(1 + p.i, -p.n));
+          return `PMT = \\dfrac{${p.monto}\\times${p.i.toFixed(5)}}{1-(1+${p.i.toFixed(5)})^{-${p.n}}} = ${redondearCifrasSignificativas(pmt, 3)}`;
+        }
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `el interés total que pagará ${p.nombre} durante todo el préstamo.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => {
+          const pmt = p.monto * p.i / (1 - Math.pow(1 + p.i, -p.n));
+          return pmt * p.n - p.monto;
+        },
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "El interés total es la suma de todas las cuotas pagadas, menos el monto original del préstamo: \\(I = PMT \\times n - PV\\).",
+        pista2: (p) => `Use la cuota (PMT) del apartado (a), multiplíquela por \\(n=${p.n}\\), y réstele \\(PV=${p.monto}\\).`,
+        solucion: (p) => {
+          const pmt = p.monto * p.i / (1 - Math.pow(1 + p.i, -p.n));
+          const interes = pmt * p.n - p.monto;
+          return `I = ${redondearCifrasSignificativas(pmt, 3)} \\times ${p.n} - ${p.monto} = ${redondearCifrasSignificativas(interes, 3)}`;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.7-003",
+    subtema: "1.7",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      let montoInicial, r, retiro, n, i, restante;
+      let intentos = 0;
+      do {
+        montoInicial = entero(3000, 8000) * 1000;
+        r = entero(4, 8);
+        retiro = entero(20, 60) * 1000;
+        n = entero(12, 36);
+        i = r / 1200;
+        restante = montoInicial * Math.pow(1 + i, n) - retiro * (Math.pow(1 + i, n) - 1) / i;
+        intentos++;
+      } while (restante <= 0 && intentos < 30);
+      return { nombre, montoInicial, r, retiro, n, i };
+    },
+    contexto: (p) => `${p.nombre} tiene un fondo de ${p.montoInicial.toLocaleString('es-CR')} colones invertido a una tasa de interés anual nominal del ${p.r}%, capitalizada mensualmente. Retira ${p.retiro.toLocaleString('es-CR')} colones al final de cada mes para cubrir sus gastos.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el monto que queda en el fondo después de ${p.n} meses.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.montoInicial * Math.pow(1 + p.i, p.n) - p.retiro * (Math.pow(1 + p.i, p.n) - 1) / p.i,
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "El saldo combina el crecimiento del fondo con los retiros mensuales: \\(B_n = PV(1+i)^n - PMT\\dfrac{(1+i)^n-1}{i}\\).",
+        pista2: (p) => `Aquí \\(PV=${p.montoInicial}\\), \\(PMT=${p.retiro}\\), \\(i=\\dfrac{${p.r}}{1200}=${p.i.toFixed(5)}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => {
+          const b = p.montoInicial * Math.pow(1 + p.i, p.n) - p.retiro * (Math.pow(1 + p.i, p.n) - 1) / p.i;
+          return `B_{${p.n}} = ${p.montoInicial}(1+${p.i.toFixed(5)})^{${p.n}} - ${p.retiro}\\dfrac{(1+${p.i.toFixed(5)})^{${p.n}}-1}{${p.i.toFixed(5)}} = ${redondearCifrasSignificativas(b, 3)}`;
+        }
+      }
+    ]
+  }
+
+);
