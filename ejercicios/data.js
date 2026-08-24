@@ -983,3 +983,167 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.8 (Sistemas de ecuaciones y ecuaciones polinómicas con tecnología) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.8-001",
+    subtema: "1.8",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      let x, y, adultos1, ninos1, adultos2, ninos2, det;
+      let intentos = 0;
+      do {
+        x = entero(20, 80) * 100;       // precio adulto, múltiplo de 100
+        y = entero(10, x / 100 - 5) * 100; // precio niño, menor que el de adulto
+        adultos1 = entero(2, 10);
+        ninos1 = entero(2, 10);
+        adultos2 = entero(2, 10);
+        ninos2 = entero(2, 10);
+        det = adultos1 * ninos2 - adultos2 * ninos1;
+        intentos++;
+      } while (det === 0 && intentos < 30);
+
+      const total1 = adultos1 * x + ninos1 * y;
+      const total2 = adultos2 * x + ninos2 * y;
+      const lugar = elegir(["parque de diversiones", "zoológico", "museo interactivo", "acuario"]);
+
+      return { x, y, adultos1, ninos1, adultos2, ninos2, total1, total2, lugar };
+    },
+    contexto: (p) => `En un ${p.lugar}, un boleto de adulto cuesta \\(x\\) colones y un boleto de niño cuesta \\(y\\) colones. Un grupo de ${p.adultos1} adultos y ${p.ninos1} niños pagó un total de ${p.total1.toLocaleString('es-CR')} colones. Otro grupo de ${p.adultos2} adultos y ${p.ninos2} niños pagó un total de ${p.total2.toLocaleString('es-CR')} colones.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `el precio de un boleto de adulto.`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.x,
+        puntos: 3,
+        pista1: "Plantee un sistema de dos ecuaciones lineales con las incógnitas \\(x\\) (precio de adulto) e \\(y\\) (precio de niño), usando la información de ambos grupos.",
+        pista2: (p) => `El sistema es: \\(${p.adultos1}x+${p.ninos1}y=${p.total1}\\) y \\(${p.adultos2}x+${p.ninos2}y=${p.total2}\\). Resuélvalo con su calculadora.`,
+        solucion: (p) => `Resolviendo el sistema: \\(x = ${p.x}\\) colones.`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `el precio de un boleto de niño.`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.y,
+        puntos: 2,
+        pista1: "Use el mismo sistema de ecuaciones planteado en el apartado (a).",
+        pista2: () => `Una vez que tenga el valor de \\(x\\) (del apartado anterior), sustitúyalo en cualquiera de las dos ecuaciones para despejar \\(y\\).`,
+        solucion: (p) => `Resolviendo el sistema: \\(y = ${p.y}\\) colones.`
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.8-002",
+    subtema: "1.8",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const a = elegir([1, 2, 3, -1, -2]);
+      const b = entero(-8, 8);
+      const c = entero(-15, 15);
+      const xs = [-3, -2, -1, 1, 2, 3].sort(() => Math.random() - 0.5).slice(0, 3).sort((p, q) => p - q);
+      const [x1, x2, x3] = xs;
+      const f = (x) => a * x * x + b * x + c;
+      return { a, b, c, x1, x2, x3, y1: f(x1), y2: f(x2), y3: f(x3) };
+    },
+    contexto: (p) => `Un modelo cuadrático \\(y=ax^2+bx+c\\) pasa por los puntos \\((${p.x1}, ${p.y1})\\), \\((${p.x2}, ${p.y2})\\) y \\((${p.x3}, ${p.y3})\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(a\\).`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.a,
+        puntos: 3,
+        pista1: "Sustituya cada punto en \\(y=ax^2+bx+c\\) para obtener un sistema de tres ecuaciones lineales en \\(a\\), \\(b\\) y \\(c\\).",
+        pista2: (p) => `El sistema es: \\(a(${p.x1})^2+b(${p.x1})+c=${p.y1}\\), \\(a(${p.x2})^2+b(${p.x2})+c=${p.y2}\\), \\(a(${p.x3})^2+b(${p.x3})+c=${p.y3}\\). Resuélvalo con su calculadora.`,
+        solucion: (p) => `Resolviendo el sistema: \\(a = ${p.a}\\).`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(b\\).`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.b,
+        puntos: 2,
+        pista1: "Use el mismo sistema de tres ecuaciones del apartado (a).",
+        pista2: () => `Resuelva el sistema completo con su calculadora (los tres valores \\(a\\), \\(b\\), \\(c\\) se obtienen juntos).`,
+        solucion: (p) => `Resolviendo el sistema: \\(b = ${p.b}\\).`
+      },
+      {
+        id: "c",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(c\\).`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.c,
+        puntos: 2,
+        pista1: "Use el mismo sistema de tres ecuaciones del apartado (a).",
+        pista2: () => `Resuelva el sistema completo con su calculadora (los tres valores \\(a\\), \\(b\\), \\(c\\) se obtienen juntos).`,
+        solucion: (p) => `Resolviendo el sistema: \\(c = ${p.c}\\).`
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.8-003",
+    subtema: "1.8",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const a = elegir([1, 2, 3]);
+      let r1 = entero(-9, -1);
+      let r2 = entero(1, 9);
+      if (Math.random() < 0.3) { // a veces ambas raíces del mismo signo, para variar
+        r1 = entero(-9, -2);
+        r2 = r1 + entero(1, 6);
+      }
+      const rMenor = Math.min(r1, r2);
+      const rMayor = Math.max(r1, r2);
+      const b = -a * (rMenor + rMayor);
+      const c = a * rMenor * rMayor;
+      return { a, b, c, rMenor, rMayor };
+    },
+    contexto: (p) => {
+      const bTxt = (p.b >= 0 ? " + " : " - ") + Math.abs(p.b) + "x";
+      const cTxt = (p.c >= 0 ? " + " : " - ") + Math.abs(p.c);
+      return `Considere la función cuadrática \\(f(x) = ${p.a}x^2${bTxt}${cTxt}\\).`;
+    },
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Use",
+        enunciado: () => `tecnología para hallar el menor valor de \\(x\\) para el cual \\(f(x)=0\\).`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.rMenor,
+        puntos: 2,
+        pista1: "Use el solver de ecuaciones o la función de hallar raíces/ceros de su calculadora, aplicado a \\(f(x)=0\\).",
+        pista2: () => `Esta ecuación tiene dos soluciones; identifique cuál de las dos es la menor.`,
+        solucion: (p) => `El menor cero de \\(f(x)\\) es \\(x = ${p.rMenor}\\).`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `el mayor valor de \\(x\\) para el cual \\(f(x)=0\\).`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.rMayor,
+        puntos: 2,
+        pista1: "Use el mismo procedimiento del apartado (a).",
+        pista2: () => `Identifique la segunda solución de \\(f(x)=0\\), la mayor de las dos.`,
+        solucion: (p) => `El mayor cero de \\(f(x)\\) es \\(x = ${p.rMayor}\\).`
+      }
+    ]
+  }
+
+);
