@@ -149,5 +149,142 @@ const CONTENIDOS = [
     temaNombre: "Geometría y trigonometría",
     contenido: "Diagramas de Voronoi: sitios, vértices, aristas, celdas; añadir un sitio nuevo a un diagrama existente; interpolación del vecino más próximo. Aplicación típica: el problema del \"vertido de residuos tóxicos\".",
     orientacion: "En examen se dan las coordenadas de los sitios para calcular las ecuaciones de las mediatrices (no hay que trazarlas a mano). El punto solución siempre está en la intersección de tres aristas. Para todos los puntos de una celda se asume el mismo valor que el del sitio correspondiente."
+  },
+
+  // ---------- TEMA 4: Estadística y probabilidad ----------
+  {
+    id: "4.1",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Concepto de población, muestra, muestra aleatoria, datos discretos y continuos; fiabilidad de las fuentes de datos y sesgo de muestreo; qué hacer ante datos faltantes o errores de registro; interpretación de valores atípicos; técnicas de muestreo (aleatorio simple, por conveniencia, sistemático, por cuotas, estratificado).",
+    orientacion: "Un valor atípico se define como un dato a más de \\(1.5 \\times \\text{RIC}\\) del cuartil más próximo. En contexto, algunos valores atípicos son válidos y otros son errores."
+  },
+  {
+    id: "4.2",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Presentación de datos discretos y continuos: tablas de frecuencia; histogramas; frecuencia acumulada (y su uso para hallar mediana, cuartiles, percentiles, rango y RIC); diagramas de caja y bigotes.",
+    orientacion: "Los intervalos de clase se dan como desigualdades, sin huecos. No se piden histogramas de densidad de frecuencia. Los valores atípicos en un diagrama de caja se marcan con una cruz (X). Se puede usar la simetría de la caja para estimar si los datos siguen una distribución normal."
+  },
+  {
+    id: "4.3",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Medidas de tendencia central (media, mediana, moda), incluida la estimación de la media desde datos agrupados; clase modal; medidas de dispersión (rango intercuartil, desviación típica, varianza); efecto de sumar o multiplicar todos los datos por una constante; cuartiles de datos discretos.",
+    orientacion: "La desviación típica y la varianza se calculan con tecnología (el cálculo a mano ayuda a comprender). Si se resta una constante a todos los datos, la media cambia pero la desviación típica no; si se multiplica, ambas cambian proporcionalmente. Distintos métodos tecnológicos pueden dar cuartiles ligeramente distintos."
+  },
+  {
+    id: "4.4",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Correlación lineal de dos variables; coeficiente de correlación de Pearson (\\(r\\)); diagrama de dispersión y recta de ajuste óptimo por el punto medio; tipo de correlación (positiva/negativa/nula, fuerte/débil); ecuación de la recta de regresión de \\(y\\) sobre \\(x\\) y su uso para predecir.",
+    orientacion: "\\(r\\) se calcula con tecnología y solo tiene sentido para relaciones lineales. Correlación no implica causalidad. Cuidado con extrapolar fuera del rango de datos, y con predecir \\(x\\) a partir de \\(y\\) usando la recta de \\(y\\) sobre \\(x\\)."
+  },
+  {
+    id: "4.5",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Probabilidad de un suceso; sucesos complementarios; diagramas de Venn, de árbol, de espacio muestral y tablas de resultados para calcular probabilidades.",
+    orientacion: ""
+  },
+  {
+    id: "4.6",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Sucesos compuestos; sucesos incompatibles; probabilidad condicionada; sucesos independientes; probabilidad con o sin reposición.",
+    orientacion: "Los problemas se pueden resolver con diagramas (Venn, árbol) sin usar las fórmulas explícitamente."
+  },
+  {
+    id: "4.7",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Concepto de variable aleatoria discreta y su distribución de probabilidad; esperanza matemática \\(E(X)\\) para datos discretos.",
+    orientacion: "\\(E(X) = 0\\) indica un juego justo, donde \\(X\\) representa la ganancia de un jugador."
+  },
+  {
+    id: "4.8",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Distribución binomial; media y varianza; situaciones donde es un modelo adecuado.",
+    orientacion: "Los valores de probabilidad binomial se hallan con tecnología. No se exige la demostración formal de la media ni la varianza. Conecta con el valor esperado de ocurrencias (4.5)."
+  },
+  {
+    id: "4.9",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "La distribución normal y su curva; propiedades (aproximadamente 68% de los datos entre \\(\\mu \\pm \\sigma\\), 95% entre \\(\\mu \\pm 2\\sigma\\), 99.7% entre \\(\\mu \\pm 3\\sigma\\)); cálculo de probabilidades; proceso inverso (hallar el valor de la variable dada una probabilidad).",
+    orientacion: "Las probabilidades y los valores de la variable se hallan con tecnología, con la media y desviación típica dadas. No implica estandarizar la variable (transformarla a \\(z\\))."
+  },
+  {
+    id: "4.10",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Coeficiente de correlación por rangos de Spearman (\\(r_s\\)); comparación de pertinencia y limitaciones entre Pearson y Spearman según valores atípicos.",
+    orientacion: "\\(r_s\\) se halla con tecnología; si hay datos empatados, los rangos se promedian. Spearman sirve para cualquier relación monótona (no solo lineal) y es menos sensible a valores atípicos que Pearson."
+  },
+  {
+    id: "4.11",
+    tema: 4,
+    temaNombre: "Estadística y probabilidad",
+    contenido: "Formulación de hipótesis nula y alternativa (\\(H_0\\), \\(H_1\\)); niveles de significación; valor \\(p\\); frecuencias esperadas/observadas; prueba \\(\\chi^2\\) de independencia (tablas de contingencia) y de bondad de ajuste; prueba \\(t\\) de Student para comparar medias de dos poblaciones.",
+    orientacion: "En NM: muestras independientes, varianza poblacional siempre desconocida; máximo 4 filas/columnas en tablas de contingencia; grados de libertad siempre mayores que 1 (\\(n-1\\) en bondad de ajuste); frecuencias esperadas deben ser mayores a 5; solo contrastes de cola superior con niveles habituales (1%, 5%, 10%); todos los cálculos se hacen con tecnología."
+  },
+
+  // ---------- TEMA 5: Análisis ----------
+  {
+    id: "5.1",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Introducción al concepto de límite; la derivada interpretada como función pendiente y como razón de cambio; notaciones \\(\\frac{dy}{dx}\\), \\(f'(x)\\), \\(\\frac{dV}{dr}\\), \\(\\frac{ds}{dt}\\).",
+    orientacion: "Estimación del valor de un límite a partir de una tabla o gráfico; no se requieren métodos analíticos formales para límites. Comprensión informal de la pendiente de una curva como un límite."
+  },
+  {
+    id: "5.2",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Funciones crecientes y decrecientes; interpretación gráfica de \\(f'(x) > 0\\), \\(f'(x) = 0\\), \\(f'(x) < 0\\).",
+    orientacion: "Identificar en qué intervalos la función crece o decrece a partir del signo de la derivada."
+  },
+  {
+    id: "5.3",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "La derivada de \\(f(x) = ax^n\\) es \\(f'(x) = anx^{n-1}\\), con \\(n \\in \\mathbb{Z}\\); derivada de sumas de términos de este tipo.",
+    orientacion: ""
+  },
+  {
+    id: "5.4",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Recta tangente y recta normal a una curva en un punto dado; ecuación de dichas rectas.",
+    orientacion: "Se pueden usar enfoques analíticos o tecnológicos."
+  },
+  {
+    id: "5.5",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Introducción a la integración como primitiva de funciones \\(f(x) = ax^n + bx^{n-1} + \\dots\\), con \\(n \\in \\mathbb{Z}\\), \\(n \\neq -1\\); integración con una condición para hallar la constante; integrales definidas con tecnología; área bajo una curva \\(y=f(x)\\) sobre el eje \\(x\\), donde \\(f(x) > 0\\).",
+    orientacion: "Los alumnos deben entender la relación entre primitivas, integrales definidas y área bajo la curva. Se espera escribir primero la expresión correcta antes de calcular con tecnología."
+  },
+  {
+    id: "5.6",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Valores de \\(x\\) donde la pendiente de la curva es cero (resolver \\(f'(x) = 0\\)); puntos máximos y mínimos locales.",
+    orientacion: "Se puede usar tecnología para generar \\(f'(x)\\) a partir de \\(f(x)\\) y resolver \\(f'(x)=0\\). Un máximo o mínimo local no es necesariamente el valor más grande o pequeño de toda la función en su dominio."
+  },
+  {
+    id: "5.7",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Problemas de optimización en un contexto dado (por ejemplo, maximizar beneficios, minimizar costos, maximizar volumen dado un área de superficie).",
+    orientacion: "En NM no se plantean preguntas de cinemática en este subtema."
+  },
+  {
+    id: "5.8",
+    tema: 5,
+    temaNombre: "Análisis",
+    contenido: "Cálculo aproximado de áreas con la regla del trapecio, usando una tabla de datos o una función, con intervalos de igual ancho.",
+    orientacion: "Conecta con las cotas de redondeo (1.6) y el área bajo la curva (5.5)."
   }
 ];
