@@ -152,6 +152,28 @@ function montarEjercicio(ejercicio, contenedorEj) {
         feedback.className = ok ? "feedback correcto" : "feedback incorrecto";
         renderMathInElement(feedback, { delimiters: [{ left: "\\(", right: "\\)", display: false }], throwOnError: false });
       });
+    } else if (ap.formato === "entero") {
+      divAp.innerHTML = `
+        <p><strong>(${ap.id})</strong> ${ap.verboMando} ${enunciadoTexto}</p>
+        <div class="input-decimal">
+          <input type="number" step="1" class="input-valor" placeholder="Su respuesta (entero)">
+          <button class="btn-verificar">Verificar</button>
+        </div>
+        <p class="feedback"></p>
+      `;
+      divAp.querySelector(".btn-verificar").addEventListener("click", () => {
+        const valorEst = parseInt(divAp.querySelector(".input-valor").value, 10);
+        const correcta = ap.calcularRespuesta(parametros);
+        const feedback = divAp.querySelector(".feedback");
+        if (isNaN(valorEst)) {
+          feedback.textContent = "Ingrese un número entero.";
+          feedback.className = "feedback aviso";
+          return;
+        }
+        const ok = verificarEntero(valorEst, correcta);
+        feedback.textContent = ok ? "✓ Correcto." : "✗ No es correcto. Revise su procedimiento.";
+        feedback.className = ok ? "feedback correcto" : "feedback incorrecto";
+      });
     } else {
       divAp.innerHTML = `
         <p><strong>(${ap.id})</strong> ${ap.verboMando} ${enunciadoTexto}</p>

@@ -39,6 +39,11 @@ function verificarDecimal(respuestaEstudiante, respuestaCorrecta, cifras = 3) {
   return Math.abs(respuestaEstudiante - correctaRedondeada) <= tolerancia;
 }
 
+// Compara una respuesta entera exacta (ej. "número mínimo de semanas").
+function verificarEntero(respuestaEstudiante, respuestaCorrecta) {
+  return Number.isInteger(respuestaEstudiante) && respuestaEstudiante === respuestaCorrecta;
+}
+
 // ---------- Generadores de parámetros aleatorios ----------
 
 const NOMBRES = ["Valeria", "Diego", "Camila", "Mateo", "Sofía", "Andrés", "Fernanda", "Luis"];
@@ -161,3 +166,131 @@ const EJERCICIOS = [
   }
 
 ];
+
+// ---------- Ejercicios de 1.2 (Progresiones aritméticas) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.2-001",
+    subtema: "1.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      u1: entero(3, 20),
+      d: entero(2, 10),
+      n: entero(6, 15)
+    }),
+    contexto: (p) => `En una progresión aritmética, el primer término es \\(u_1 = ${p.u1}\\) y la diferencia común es \\(d = ${p.d}\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `el ${p.n}.º término de la progresión.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.u1 + (p.n - 1) * p.d,
+        cifrasSignificativas: 3,
+        puntos: 2
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: (p) => `la suma de los primeros ${p.n} términos de la progresión.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d),
+        cifrasSignificativas: 3,
+        puntos: 2
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.2-002",
+    subtema: "1.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      nombre: elegir(NOMBRES),
+      u1: entero(40, 120),
+      d: entero(10, 40),
+      n: entero(8, 15)
+    }),
+    contexto: (p) => `${p.nombre} trabaja en un programa de reforestación. El primer mes planta ${p.u1} árboles, y cada mes siguiente planta ${p.d} árboles más que el mes anterior.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `el número de árboles que planta en el mes ${p.n}.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.u1 + (p.n - 1) * p.d,
+        cifrasSignificativas: 3,
+        puntos: 2
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: (p) => `el número total de árboles plantados durante los primeros ${p.n} meses.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d),
+        cifrasSignificativas: 3,
+        puntos: 2
+      },
+      {
+        id: "c",
+        verboMando: "Halle",
+        enunciado: (p) => `el número promedio de árboles plantados por mes durante esos ${p.n} meses.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => ((p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d)) / p.n,
+        cifrasSignificativas: 3,
+        puntos: 2
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.2-003",
+    subtema: "1.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const u1 = entero(500, 2000);
+      const d = entero(100, 500);
+      const semanaEjemplo = entero(4, 8);
+      const n0 = entero(10, 20);
+
+      const suma = (n) => (n / 2) * (2 * u1 + (n - 1) * d);
+      const sN0 = suma(n0);
+      const sN0menos1 = suma(n0 - 1);
+      // meta elegida para que el mínimo n que la supera sea exactamente n0
+      const meta = entero(Math.ceil(sN0menos1) + 1, Math.floor(sN0));
+
+      return { nombre, u1, d, semanaEjemplo, n0, meta };
+    },
+    contexto: (p) => `${p.nombre} ahorra dinero cada semana para comprarse una bicicleta. La primera semana ahorra ${p.u1} colones, y cada semana siguiente ahorra ${p.d} colones más que la semana anterior.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `cuánto ahorra ${p.nombre} en la semana ${p.semanaEjemplo}.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.u1 + (p.semanaEjemplo - 1) * p.d,
+        cifrasSignificativas: 3,
+        puntos: 2
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `el número mínimo de semanas que ${p.nombre} necesita ahorrar para que el total ahorrado supere los ${p.meta} colones.`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.n0,
+        puntos: 3
+      }
+    ]
+  }
+
+);
