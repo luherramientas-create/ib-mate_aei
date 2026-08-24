@@ -615,3 +615,120 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.5 (Potencias y logaritmos) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.5-001",
+    subtema: "1.5",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      concentracion: entero(1, 90) / Math.pow(10, entero(3, 6)), // ej. 4.5e-5
+      phDado: (entero(30, 90) / 10) // ej. 5.7
+    }),
+    contexto: () => `El pH de una solución se calcula con la fórmula \\(pH = -\\log_{10}[H^+]\\), donde \\([H^+]\\) es la concentración de iones de hidrógeno, en mol/L.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el pH de una muestra cuya concentración de iones de hidrógeno es \\([H^+] = ${p.concentracion.toExponential(2)}\\) mol/L.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => -Math.log10(p.concentracion),
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la fórmula \\(pH = -\\log_{10}[H^+]\\).",
+        pista2: (p) => `Sustituya \\([H^+]=${p.concentracion.toExponential(2)}\\) y calcule \\(-\\log_{10}(${p.concentracion.toExponential(2)})\\) con su calculadora.`,
+        solucion: (p) => `pH = -\\log_{10}(${p.concentracion.toExponential(2)}) = ${redondearCifrasSignificativas(-Math.log10(p.concentracion), 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `la concentración de iones de hidrógeno \\([H^+]\\) de otra muestra cuyo pH es ${p.phDado}.`,
+        tipo: "calculo",
+        formato: "cientifica",
+        calcularRespuesta: (p) => aFormaCientifica(Math.pow(10, -p.phDado)),
+        puntos: 2,
+        pista1: "Despeje \\([H^+]\\) de la fórmula: si \\(pH=-\\log_{10}[H^+]\\), entonces \\([H^+]=10^{-pH}\\).",
+        pista2: (p) => `Calcule \\(10^{-${p.phDado}}\\) y exprese el resultado en notación científica.`,
+        solucion: (p) => { const r = aFormaCientifica(Math.pow(10, -p.phDado)); return `[H^+] = 10^{-${p.phDado}} = ${r.a} \\times 10^{${r.k}}\\text{ mol/L}`; }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.5-002",
+    subtema: "1.5",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      base: entero(2, 6),
+      valor: entero(50, 950)
+    }),
+    contexto: (p) => `Resuelva la ecuación \\(${p.base}^{x} = ${p.valor}\\) para \\(x\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(x\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => Math.log(p.valor) / Math.log(p.base),
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Recuerde que \\(a^x=b \\Leftrightarrow x=\\log_a b\\).",
+        pista2: (p) => `Calcule \\(\\log_{${p.base}}(${p.valor})\\) usando \\(\\dfrac{\\log(${p.valor})}{\\log(${p.base})}\\) (o con \\(\\ln\\)) en su calculadora.`,
+        solucion: (p) => `x = \\log_{${p.base}}(${p.valor}) = ${redondearCifrasSignificativas(Math.log(p.valor) / Math.log(p.base), 3)}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.5-003",
+    subtema: "1.5",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const phA = entero(20, 50) / 10;
+      const diferencia = entero(1, 3);
+      const phB = phA + diferencia;
+      return { phA, phB, diferencia };
+    },
+    contexto: (p) => `La solución A tiene un pH de ${p.phA}, y la solución B tiene un pH de ${p.phB}.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `la concentración de iones de hidrógeno de la solución A.`,
+        tipo: "calculo",
+        formato: "cientifica",
+        calcularRespuesta: (p) => aFormaCientifica(Math.pow(10, -p.phA)),
+        puntos: 2,
+        pista1: "Use \\([H^+] = 10^{-pH}\\).",
+        pista2: (p) => `Calcule \\(10^{-${p.phA}}\\).`,
+        solucion: (p) => { const r = aFormaCientifica(Math.pow(10, -p.phA)); return `[H^+]_A = 10^{-${p.phA}} = ${r.a} \\times 10^{${r.k}}\\text{ mol/L}`; }
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `la concentración de iones de hidrógeno de la solución B.`,
+        tipo: "calculo",
+        formato: "cientifica",
+        calcularRespuesta: (p) => aFormaCientifica(Math.pow(10, -p.phB)),
+        puntos: 2,
+        pista1: "Use \\([H^+] = 10^{-pH}\\).",
+        pista2: (p) => `Calcule \\(10^{-${p.phB}}\\).`,
+        solucion: (p) => { const r = aFormaCientifica(Math.pow(10, -p.phB)); return `[H^+]_B = 10^{-${p.phB}} = ${r.a} \\times 10^{${r.k}}\\text{ mol/L}`; }
+      },
+      {
+        id: "c",
+        verboMando: "Explique",
+        enunciado: (p) => `cuántas veces mayor es la concentración de iones de hidrógeno en la solución A que en la solución B, y cómo lo determinó a partir de la diferencia de pH.`,
+        tipo: "interpretacion",
+        respuestaModelo: "Como la escala de pH es logarítmica en base 10, cada unidad de diferencia en el pH representa un factor de 10 en la concentración de iones de hidrógeno. Como la diferencia entre los dos pH es de ese número de unidades, la solución A es 10 elevado a esa diferencia veces más ácida (mayor concentración de H+) que la solución B — sin necesidad de calcular ambas concentraciones por separado.",
+        puntos: 1
+      }
+    ]
+  }
+
+);
