@@ -471,3 +471,147 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.4 (Interés compuesto) ----------
+
+const FRECUENCIAS = [
+  { k: 1, label: "anualmente" },
+  { k: 2, label: "semestralmente" },
+  { k: 4, label: "trimestralmente" },
+  { k: 12, label: "mensualmente" }
+];
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.4-001",
+    subtema: "1.4",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const PV = entero(100, 900) * 1000;
+      const r = entero(3, 10);
+      const frec = elegir(FRECUENCIAS);
+      const n = entero(2, 8);
+      return { nombre, PV, r, k: frec.k, kLabel: frec.label, n };
+    },
+    contexto: (p) => `${p.nombre} invierte ${p.PV.toLocaleString('es-CR')} colones en una cuenta que paga una tasa de interés compuesto anual nominal del ${p.r}%, capitalizada ${p.kLabel}.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el valor de la inversión después de ${p.n} años.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n),
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Recuerde la fórmula del interés compuesto: \\(FV = PV\\left(1+\\dfrac{r}{100k}\\right)^{kn}\\).",
+        pista2: (p) => `Aquí \\(PV=${p.PV}\\), \\(r=${p.r}\\), \\(k=${p.k}\\) y \\(n=${p.n}\\). El exponente completo es \\(kn=${p.k * p.n}\\).`,
+        solucion: (p) => {
+          const fv = p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n);
+          return `FV = ${p.PV}\\left(1+\\dfrac{${p.r}}{100(${p.k})}\\right)^{${p.k}\\times${p.n}} = ${redondearCifrasSignificativas(fv, 3)}`;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.4-002",
+    subtema: "1.4",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const PV = entero(150, 800) * 1000;
+      const r = entero(4, 12);
+      const frec = elegir(FRECUENCIAS);
+      const n = entero(3, 10);
+      return { nombre, PV, r, k: frec.k, kLabel: frec.label, n };
+    },
+    contexto: (p) => `${p.nombre} invierte ${p.PV.toLocaleString('es-CR')} colones en un certificado de depósito que paga una tasa de interés compuesto anual nominal del ${p.r}%, capitalizada ${p.kLabel}.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el valor futuro de la inversión después de ${p.n} años.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n),
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Use \\(FV = PV\\left(1+\\dfrac{r}{100k}\\right)^{kn}\\).",
+        pista2: (p) => `Sustituya \\(PV=${p.PV}\\), \\(r=${p.r}\\), \\(k=${p.k}\\), \\(n=${p.n}\\).`,
+        solucion: (p) => {
+          const fv = p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n);
+          return `FV = ${redondearCifrasSignificativas(fv, 3)}`;
+        }
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: () => `el interés total generado durante esos años.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n) - p.PV,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "El interés generado es la diferencia entre el valor futuro y la inversión inicial: \\(I = FV - PV\\).",
+        pista2: (p) => `Use el valor futuro (FV) que calculó en el apartado (a) y réstele \\(PV=${p.PV}\\).`,
+        solucion: (p) => {
+          const fv = p.PV * Math.pow(1 + p.r / (100 * p.k), p.k * p.n);
+          return `I = ${redondearCifrasSignificativas(fv, 3)} - ${p.PV} = ${redondearCifrasSignificativas(fv - p.PV, 3)}`;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.4-003",
+    subtema: "1.4",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const PV = entero(200, 1000) * 1000;
+      const r = entero(3, 10);
+      const rDec = 1 + r / 100;
+      const nEjemplo = entero(2, 5);
+
+      const valorEn = (t) => PV * Math.pow(rDec, t);
+      const n0 = entero(5, 15);
+      const vN0 = valorEn(n0);
+      const vN0menos1 = valorEn(n0 - 1);
+      const meta = entero(Math.ceil(vN0menos1) + 1, Math.floor(vN0));
+
+      return { nombre, PV, r, rDec, nEjemplo, n0, meta };
+    },
+    contexto: (p) => `${p.nombre} invierte ${p.PV.toLocaleString('es-CR')} colones en una cuenta de ahorros que paga un interés compuesto anual del ${p.r}%, capitalizado anualmente.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el valor de la inversión después de ${p.nEjemplo} años.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.PV * Math.pow(p.rDec, p.nEjemplo),
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Con capitalización anual (\\(k=1\\)), la fórmula se simplifica a \\(FV = PV(1+r/100)^n\\).",
+        pista2: (p) => `Sustituya \\(PV=${p.PV}\\), \\(r=${p.r}\\) y \\(n=${p.nEjemplo}\\).`,
+        solucion: (p) => { const fv = p.PV * Math.pow(p.rDec, p.nEjemplo); return `FV = ${p.PV}(1+${p.r}/100)^{${p.nEjemplo}} = ${redondearCifrasSignificativas(fv, 3)}`; }
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `el número mínimo de años completos para que la inversión supere los ${p.meta.toLocaleString('es-CR')} colones.`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.n0,
+        puntos: 3,
+        pista1: "Necesita el menor \\(n\\) entero tal que \\(PV(1+r/100)^n\\) sea mayor que la meta.",
+        pista2: (p) => `Pruebe distintos valores de \\(n\\) hasta superar los ${p.meta.toLocaleString('es-CR')} colones, o use logaritmos para despejar \\(n\\).`,
+        solucion: (p) => `El menor \\(n\\) que cumple la condición es \\(n = ${p.n0}\\) años.`
+      }
+    ]
+  }
+
+);
