@@ -293,6 +293,38 @@ body {
   display: none;
 }
 
+/* Chips de subtema (dentro de un Tema) */
+.subtema-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.subtema-chip {
+  background: var(--blanco);
+  border: 1px solid var(--azul-medio);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: 0.85rem;
+  color: var(--azul-oscuro);
+  cursor: pointer;
+}
+
+.subtema-chip:hover {
+  background: var(--azul-claro);
+}
+
+.subtema-chip.activo {
+  background: var(--azul-medio);
+  color: var(--blanco);
+}
+
+/* Botón "Combinados" con acento distinto para diferenciarlo de los 5 temas */
+.tema-btn-combinados {
+  border-style: dashed;
+}
+
 /* Footer */
 .app-footer {
   text-align: center;

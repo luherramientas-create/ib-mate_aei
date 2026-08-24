@@ -6,10 +6,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   botones.forEach(boton => {
     boton.addEventListener("click", () => {
-      const temaNum = parseInt(boton.dataset.tema, 10);
       botones.forEach(b => b.classList.remove("activo"));
       boton.classList.add("activo");
-      renderTema(temaNum, contenedor);
+      const valor = boton.dataset.tema;
+      if (valor === "combinados") {
+        renderCombinados(contenedor);
+      } else {
+        renderTema(parseInt(valor, 10), contenedor);
+      }
     });
   });
 
@@ -17,33 +21,87 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTema(1, contenedor);
 });
 
+// ---------- Vista de un Tema: chips de subtema + lista de ejercicios ----------
+
 function renderTema(temaNum, contenedor) {
   contenedor.innerHTML = "";
 
-  // Por ahora solo 1.1 (Tema 1) tiene ejercicios reales.
-  if (temaNum !== 1) {
+  const ejerciciosDeTema = EJERCICIOS.filter(
+    e => e.tipoEjercicio === "aislado" && e.subtema && e.subtema.startsWith(temaNum + ".")
+  );
+
+  if (ejerciciosDeTema.length === 0) {
     contenedor.innerHTML = '<p class="placeholder">Próximamente — este tema todavía no tiene ejercicios cargados.</p>';
     return;
   }
 
-  const ejerciciosDeTema = EJERCICIOS.filter(e => e.subtema.startsWith("1."));
+  const subtemas = [...new Set(ejerciciosDeTema.map(e => e.subtema))].sort();
 
-  ejerciciosDeTema.forEach(ej => {
+  const navSub = document.createElement("div");
+  navSub.className = "subtema-nav";
+
+  const listaDiv = document.createElement("div");
+  listaDiv.className = "lista-ejercicios";
+
+  subtemas.forEach((st, i) => {
+    const chip = document.createElement("button");
+    chip.className = "subtema-chip";
+    chip.textContent = st;
+    if (i === 0) chip.classList.add("activo");
+    chip.addEventListener("click", () => {
+      navSub.querySelectorAll(".subtema-chip").forEach(c => c.classList.remove("activo"));
+      chip.classList.add("activo");
+      renderListaEjercicios(ejerciciosDeTema.filter(e => e.subtema === st), listaDiv);
+    });
+    navSub.appendChild(chip);
+  });
+
+  contenedor.appendChild(navSub);
+  contenedor.appendChild(listaDiv);
+
+  renderListaEjercicios(ejerciciosDeTema.filter(e => e.subtema === subtemas[0]), listaDiv);
+}
+
+// ---------- Vista de "Combinados": ejercicios integrados, sin agrupar por tema ----------
+
+function renderCombinados(contenedor) {
+  contenedor.innerHTML = "";
+
+  const ejerciciosCombinados = EJERCICIOS.filter(e => e.tipoEjercicio === "integrado");
+
+  if (ejerciciosCombinados.length === 0) {
+    contenedor.innerHTML = '<p class="placeholder">Próximamente — todavía no hay ejercicios combinados cargados. Aparecerán aquí a medida que se vayan agregando.</p>';
+    return;
+  }
+
+  const listaDiv = document.createElement("div");
+  listaDiv.className = "lista-ejercicios";
+  contenedor.appendChild(listaDiv);
+  renderListaEjercicios(ejerciciosCombinados, listaDiv);
+}
+
+// ---------- Render de una lista de ejercicios ----------
+
+function renderListaEjercicios(lista, contenedorLista) {
+  contenedorLista.innerHTML = "";
+  lista.forEach(ej => {
     const bloque = document.createElement("div");
     bloque.className = "formula-bloque";
     bloque.dataset.ejercicioId = ej.id;
-    contenedor.appendChild(bloque);
+    contenedorLista.appendChild(bloque);
     montarEjercicio(ej, bloque);
   });
 }
 
-// Genera una nueva variante del ejercicio (parámetros aleatorios) y la dibuja.
+// ---------- Montar un ejercicio individual (genera variante + apartados) ----------
+
 function montarEjercicio(ejercicio, contenedorEj) {
   const parametros = ejercicio.generarParametros();
+  const etiqueta = ejercicio.subtema ? ejercicio.subtema : ejercicio.subtemas.join(" + ");
 
   contenedorEj.innerHTML = `
     <div class="formula-encabezado">
-      <span class="formula-id">${ejercicio.subtema}</span>
+      <span class="formula-id">${etiqueta}</span>
       <button class="btn-reintentar">🔄 Nueva variante</button>
     </div>
     <p class="ejercicio-contexto">${ejercicio.contexto(parametros)}</p>
@@ -64,7 +122,7 @@ function montarEjercicio(ejercicio, contenedorEj) {
         <button class="btn-ver-respuesta">Ver respuesta modelo</button>
         <p class="respuesta-modelo oculto">${ap.respuestaModelo}</p>
       `;
-      divAp.querySelector(".btn-ver-respuesta").addEventListener("click", (e) => {
+      divAp.querySelector(".btn-ver-respuesta").addEventListener("click", () => {
         divAp.querySelector(".respuesta-modelo").classList.toggle("oculto");
       });
     } else if (ap.formato === "cientifica") {
@@ -95,7 +153,6 @@ function montarEjercicio(ejercicio, contenedorEj) {
         renderMathInElement(feedback, { delimiters: [{ left: "\\(", right: "\\)", display: false }], throwOnError: false });
       });
     } else {
-      // formato decimal normal
       divAp.innerHTML = `
         <p><strong>(${ap.id})</strong> ${ap.verboMando} ${enunciadoTexto}</p>
         <div class="input-decimal">
