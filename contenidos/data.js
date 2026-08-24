@@ -66,7 +66,88 @@ const CONTENIDOS = [
     temaNombre: "Aritmética y álgebra",
     contenido: "Uso de tecnología para resolver sistemas de ecuaciones lineales (hasta tres incógnitas) y ecuaciones polinómicas.",
     orientacion: "No se exige un método de resolución específico. Los sistemas de ecuaciones en examen siempre tienen solución única. Se debe conocer la terminología estándar (por ejemplo, \"ceros\" o \"raíces\"). Conecta con el Tema 2."
-  }
+  },
 
   // Temas 2-5 se agregan más adelante, siguiendo el mismo esquema.
+
+  // ---------- TEMA 2: Funciones ----------
+  {
+    id: "2.1",
+    tema: 2,
+    temaNombre: "Funciones",
+    contenido: "Distintas formas de expresar la ecuación de una recta (pendiente-intersección, forma general, punto-pendiente); pendiente; rectas paralelas (\\(m_1=m_2\\)) y perpendiculares (\\(m_1 \\times m_2 = -1\\)).",
+    orientacion: "Aplicable a calcular la pendiente de zonas inclinadas (carreteras de montaña, rampas, etc.)."
+  },
+  {
+    id: "2.2",
+    tema: 2,
+    temaNombre: "Funciones",
+    contenido: "Concepto de función, dominio, recorrido y gráfico; notación de funciones (\\(f(x)\\), \\(v(t)\\), \\(C(n)\\)); la función como modelo matemático; concepto de función inversa (revierte el efecto de la función), notación \\(f^{-1}(x)\\), simetría respecto a \\(y=x\\).",
+    orientacion: "La función inversa solo existe para funciones inyectivas; el dominio de \\(f^{-1}(x)\\) es el recorrido de \\(f(x)\\)."
+  },
+  {
+    id: "2.3",
+    tema: 2,
+    temaNombre: "Funciones",
+    contenido: "El gráfico de una función y su ecuación \\(y=f(x)\\); elaborar un bosquejo a partir de información dada; uso de tecnología para graficar funciones, incluida la suma y diferencia de funciones.",
+    orientacion: "Distinguir entre \"dibujar con precisión\" y \"dibujar aproximadamente\" (términos de instrucción del IB); todos los ejes y características importantes deben quedar marcados."
+  },
+  {
+    id: "2.4",
+    tema: 2,
+    temaNombre: "Funciones",
+    contenido: "Determinar las características importantes de un gráfico: máximos, mínimos, intersecciones, simetría, vértice, ceros/raíces, asíntotas horizontales y verticales (con tecnología); hallar puntos de intersección entre curvas o rectas.",
+    orientacion: ""
+  },
+  {
+    id: "2.5",
+    tema: 2,
+    temaNombre: "Funciones",
+    contenido: "Modelización con funciones: lineales \\(f(x)=mx+c\\) (incluidos modelos por tramos), cuadráticas \\(f(x)=ax^2+bx+c\\), de crecimiento/decrecimiento exponencial \\(f(x)=ka^x+c\\), \\(f(x)=ke^{rx}+c\\), variación directa/inversa \\(f(x)=ax^n\\), cúbicas \\(f(x)=ax^3+bx^2+cx+d\\), y sinusoidales \\(f(x)=a\\,\\operatorname{sen}(bx)+d\\), \\(f(x)=a\\cos(bx)+d\\).",
+    orientacion: "Para modelos sinusoidales, solo se espera predecir amplitud, período y ecuación del eje principal (no convertir seno a coseno). Conecta con 2.1, 1.2, 1.3, 1.4, 1.7 y 1.8."
+  },
+
+  // ---------- TEMA 3: Geometría y trigonometría ----------
+  {
+    id: "3.1",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "Distancia entre dos puntos en 3D y su punto medio; volumen y área de superficie de sólidos 3D (pirámide recta, cono recto, esfera, semiesfera, y combinaciones); ángulo entre dos rectas que se cruzan o entre una recta y un plano.",
+    orientacion: "En NM, las preguntas de trigonometría en figuras 3D se limitan a triángulos rectángulos; se espera identificar los triángulos rectángulos relevantes dentro de la figura para hallar longitudes y ángulos desconocidos."
+  },
+  {
+    id: "3.2",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "Razones trigonométricas (seno, coseno, tangente) para hallar lados y ángulos en triángulos rectángulos; teorema del seno; teorema del coseno; área de un triángulo con \\(\\frac{1}{2}ab\\,\\operatorname{sen}\\,C\\).",
+    orientacion: "Se recomienda hacer bosquejos rotulados. Conecta con las funciones inversas (2.2) para hallar ángulos. No incluye el caso ambiguo del teorema del seno."
+  },
+  {
+    id: "3.3",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "Aplicaciones de trigonometría en triángulos rectángulos y no rectángulos, incluido el teorema de Pitágoras; ángulos de elevación y depresión; elaborar diagramas rotulados a partir de enunciados escritos.",
+    orientacion: "El contexto puede incluir rumbos o demoras."
+  },
+  {
+    id: "3.4",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "El círculo: longitud de un arco y área de un sector circular.",
+    orientacion: "En NM no se usan radianes, solo grados."
+  },
+  {
+    id: "3.5",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "Ecuaciones de mediatrices, dados dos puntos o el segmento y su punto medio.",
+    orientacion: "Conecta con las ecuaciones de la recta (2.1)."
+  },
+  {
+    id: "3.6",
+    tema: 3,
+    temaNombre: "Geometría y trigonometría",
+    contenido: "Diagramas de Voronoi: sitios, vértices, aristas, celdas; añadir un sitio nuevo a un diagrama existente; interpolación del vecino más próximo. Aplicación típica: el problema del \"vertido de residuos tóxicos\".",
+    orientacion: "En examen se dan las coordenadas de los sitios para calcular las ecuaciones de las mediatrices (no hay que trazarlas a mano). El punto solución siempre está en la intersección de tres aristas. Para todos los puntos de una celda se asume el mismo valor que el del sitio correspondiente."
+  }
 ];
