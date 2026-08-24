@@ -732,3 +732,122 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.6 (Aproximación: cifras significativas, cotas, % de error) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.6-001",
+    subtema: "1.6",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const valorExacto = entero(1000, 9999) / 10; // ej. 423.7
+      const valorAproximado = Math.round(valorExacto);
+      return { nombre, valorExacto, valorAproximado };
+    },
+    contexto: (p) => `La distancia real entre dos pueblos es ${p.valorExacto} km. ${p.nombre} la redondea a ${p.valorAproximado} km.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: () => `el porcentaje de error de esta aproximación.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => Math.abs((p.valorAproximado - p.valorExacto) / p.valorExacto) * 100,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la fórmula \\(\\varepsilon = \\left|\\dfrac{v_A-v_E}{v_E}\\right| \\times 100\\%\\), donde \\(v_E\\) es el valor exacto y \\(v_A\\) es el valor aproximado.",
+        pista2: (p) => `Aquí \\(v_E=${p.valorExacto}\\) y \\(v_A=${p.valorAproximado}\\).`,
+        solucion: (p) => {
+          const e = Math.abs((p.valorAproximado - p.valorExacto) / p.valorExacto) * 100;
+          return `\\varepsilon = \\left|\\dfrac{${p.valorAproximado}-${p.valorExacto}}{${p.valorExacto}}\\right|\\times 100 = ${redondearCifrasSignificativas(e, 3)}\\%`;
+        }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.6-002",
+    subtema: "1.6",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const valorRedondeado = entero(20, 300);
+      return { nombre, valorRedondeado };
+    },
+    contexto: (p) => `${p.nombre} mide la longitud de una tabla de madera y obtiene ${p.valorRedondeado} cm, redondeado al centímetro más cercano.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `la cota inferior del valor real de la longitud.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.valorRedondeado - 0.5,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Si un valor se redondea al centímetro más cercano, el valor real puede estar hasta 0.5 cm por debajo o por encima del valor redondeado.",
+        pista2: (p) => `La cota inferior es \\(${p.valorRedondeado} - 0.5\\).`,
+        solucion: (p) => `\\text{Cota inferior} = ${p.valorRedondeado} - 0.5 = ${p.valorRedondeado - 0.5}\\text{ cm}`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `la cota superior del valor real de la longitud.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.valorRedondeado + 0.5,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "La cota superior es el valor redondeado más la mitad de la unidad de redondeo.",
+        pista2: (p) => `La cota superior es \\(${p.valorRedondeado} + 0.5\\).`,
+        solucion: (p) => `\\text{Cota superior} = ${p.valorRedondeado} + 0.5 = ${p.valorRedondeado + 0.5}\\text{ cm}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.6-003",
+    subtema: "1.6",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const limite = elegir([60, 70, 80, 90]);
+      const velocidadMostrada = limite + entero(-3, 6);
+      const cotaInferior = velocidadMostrada - 0.5;
+      return { limite, velocidadMostrada, cotaInferior };
+    },
+    contexto: (p) => `Un radar mide la velocidad de un vehículo y muestra ${p.velocidadMostrada} km/h, redondeada al km/h más cercano. El límite de velocidad en esa zona es ${p.limite} km/h.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `la cota inferior de la velocidad real del vehículo.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.cotaInferior,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "La velocidad mostrada está redondeada al km/h más cercano, así que la velocidad real puede ser hasta 0.5 km/h menor.",
+        pista2: (p) => `La cota inferior es \\(${p.velocidadMostrada} - 0.5\\).`,
+        solucion: (p) => `\\text{Cota inferior} = ${p.velocidadMostrada} - 0.5 = ${p.cotaInferior}\\text{ km/h}`
+      },
+      {
+        id: "b",
+        verboMando: "Determine",
+        enunciado: (p) => `si se puede afirmar con certeza que el vehículo superó el límite de velocidad de ${p.limite} km/h. Justifique su respuesta usando la cota inferior.`,
+        tipo: "interpretacion",
+        respuestaModelo: (p) => {
+          if (p.cotaInferior > p.limite) {
+            return `Sí, se puede afirmar con certeza: incluso la cota inferior de la velocidad real (${p.cotaInferior} km/h) ya es mayor que el límite de ${p.limite} km/h, así que el vehículo superó el límite sin importar el valor exacto dentro del rango de redondeo.`;
+          } else {
+            return `No se puede afirmar con certeza: la cota inferior de la velocidad real (${p.cotaInferior} km/h) es menor o igual al límite de ${p.limite} km/h, así que es posible que la velocidad real del vehículo no haya superado el límite.`;
+          }
+        },
+        puntos: 2
+      }
+    ]
+  }
+
+);

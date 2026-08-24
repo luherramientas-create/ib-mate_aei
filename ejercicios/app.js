@@ -139,7 +139,7 @@ function crearApartadoInterpretacion(ap, parametros) {
   divAp.innerHTML = `
     <p><strong>(${ap.id})</strong> ${ap.verboMando} ${enunciadoTexto}</p>
     <button class="btn-ver-respuesta">Ver respuesta modelo</button>
-    <p class="respuesta-modelo oculto">${ap.respuestaModelo}</p>
+    <p class="respuesta-modelo oculto">${typeof ap.respuestaModelo === "function" ? ap.respuestaModelo(parametros) : ap.respuestaModelo}</p>
   `;
   divAp.querySelector(".btn-ver-respuesta").addEventListener("click", () => {
     divAp.querySelector(".respuesta-modelo").classList.toggle("oculto");
