@@ -325,6 +325,39 @@ body {
   border-style: dashed;
 }
 
+/* Pistas progresivas y solución */
+.pista {
+  font-size: 0.85rem;
+  color: #7a5c00;
+  background: #fff8e1;
+  border-left: 3px solid #e0a800;
+  padding: 6px 10px;
+  margin: 0.4rem 0;
+  border-radius: 4px;
+}
+
+.pista.oculto {
+  display: none;
+}
+
+.solucion {
+  font-size: 0.9rem;
+  background: var(--azul-claro);
+  border-left: 3px solid var(--azul-oscuro);
+  padding: 8px 10px;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+}
+
+.solucion.oculto {
+  display: none;
+}
+
+input:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
+
 /* Footer */
 .app-footer {
   text-align: center;

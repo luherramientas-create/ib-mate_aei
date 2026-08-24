@@ -4,10 +4,13 @@
 // Cada ejercicio genera valores aleatorios dentro de rangos definidos,
 // por lo que cada vez que se carga se ve "distinto" pero sigue el
 // mismo esquema de solución.
+//
+// Cada apartado de tipo "calculo" puede incluir pista1, pista2 y solucion
+// (funciones que reciben los parámetros de la variante actual). Se revelan
+// progresivamente según los intentos fallidos del estudiante (ver app.js).
 
 // ---------- Utilidades de redondeo / formato ----------
 
-// Redondea un número a n cifras significativas (no decimales).
 function redondearCifrasSignificativas(numero, cifras) {
   if (numero === 0) return 0;
   const magnitud = Math.floor(Math.log10(Math.abs(numero)));
@@ -15,8 +18,6 @@ function redondearCifrasSignificativas(numero, cifras) {
   return Math.round(numero * factor) / factor;
 }
 
-// Convierte un número a su forma científica canónica: { a, k }
-// tal que numero = a * 10^k, con 1 <= a < 10.
 function aFormaCientifica(numero) {
   if (numero === 0) return { a: 0, k: 0 };
   const k = Math.floor(Math.log10(Math.abs(numero)));
@@ -24,22 +25,18 @@ function aFormaCientifica(numero) {
   return { a: redondearCifrasSignificativas(a, 3), k };
 }
 
-// Compara la respuesta del estudiante (a, k) contra la respuesta correcta,
-// con tolerancia para redondeo a 3 cifras significativas en 'a'.
 function verificarNotacionCientifica(aEstudiante, kEstudiante, aCorrecta, kCorrecta) {
   if (kEstudiante !== kCorrecta) return false;
-  if (aEstudiante < 1 || aEstudiante >= 10) return false; // fuera del rango 1 <= a < 10
+  if (aEstudiante < 1 || aEstudiante >= 10) return false;
   return Math.abs(aEstudiante - aCorrecta) < 0.01 * Math.max(1, Math.abs(aCorrecta));
 }
 
-// Compara una respuesta numérica decimal normal, tolerante a redondeo de 3 c.s.
 function verificarDecimal(respuestaEstudiante, respuestaCorrecta, cifras = 3) {
   const correctaRedondeada = redondearCifrasSignificativas(respuestaCorrecta, cifras);
   const tolerancia = Math.abs(correctaRedondeada) * 0.005 + 1e-9;
   return Math.abs(respuestaEstudiante - correctaRedondeada) <= tolerancia;
 }
 
-// Compara una respuesta entera exacta (ej. "número mínimo de semanas").
 function verificarEntero(respuestaEstudiante, respuestaCorrecta) {
   return Number.isInteger(respuestaEstudiante) && respuestaEstudiante === respuestaCorrecta;
 }
@@ -87,7 +84,10 @@ const EJERCICIOS = [
         tipo: "calculo",
         formato: "cientifica",
         calcularRespuesta: (p) => aFormaCientifica(p.numero),
-        puntos: 2
+        puntos: 2,
+        pista1: "Recuerde que un número en notación científica se escribe como \\(a \\times 10^k\\), donde \\(1 \\le a < 10\\).",
+        pista2: (p) => `Cuente cuántas posiciones debe mover el punto decimal en ${p.numero.toLocaleString('es-CR')} para dejar un solo dígito antes del punto — ese conteo es el valor de \\(k\\).`,
+        solucion: (p) => { const r = aFormaCientifica(p.numero); return `${p.numero.toLocaleString('es-CR')} = ${r.a} \\times 10^{${r.k}}`; }
       }
     ]
   },
@@ -98,7 +98,7 @@ const EJERCICIOS = [
     tipoEjercicio: "aislado",
     generarParametros: () => ({
       numero1: entero(500, 9000),
-      numero2: (entero(5, 95) / 10) // ej. 0.5 a 9.5
+      numero2: (entero(5, 95) / 10)
     }),
     contexto: (p) => `Una empresa fabrica ${p.numero1.toLocaleString('es-CR')} unidades de un producto al mes. Cada unidad tiene una masa de ${p.numero2} kg.`,
     apartados: [
@@ -110,7 +110,10 @@ const EJERCICIOS = [
         formato: "decimal",
         calcularRespuesta: (p) => p.numero1 * p.numero2,
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Multiplique el número de unidades por la masa de cada unidad.",
+        pista2: (p) => `Calcule ${p.numero1} \\times ${p.numero2}.`,
+        solucion: (p) => `${p.numero1} \\times ${p.numero2} = ${redondearCifrasSignificativas(p.numero1 * p.numero2, 3)}\\text{ kg}`
       },
       {
         id: "b",
@@ -119,7 +122,10 @@ const EJERCICIOS = [
         tipo: "calculo",
         formato: "cientifica",
         calcularRespuesta: (p) => aFormaCientifica(p.numero1 * p.numero2),
-        puntos: 2
+        puntos: 2,
+        pista1: "Use la masa total que calculó en el apartado (a).",
+        pista2: "Recuerde que \\(1 \\le a < 10\\); mueva el punto decimal hasta dejar un solo dígito antes de él.",
+        solucion: (p) => { const total = p.numero1 * p.numero2; const r = aFormaCientifica(total); return `${redondearCifrasSignificativas(total, 3)} = ${r.a} \\times 10^{${r.k}}`; }
       }
     ]
   },
@@ -143,7 +149,10 @@ const EJERCICIOS = [
         formato: "decimal",
         calcularRespuesta: (p) => p.numero * Math.pow(2, p.horas),
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "El número de bacterias se duplica cada hora, así que después de \\(t\\) horas hay \\(N_0 \\times 2^t\\) bacterias, donde \\(N_0\\) es la cantidad inicial.",
+        pista2: (p) => `Calcule ${p.numero} \\times 2^{${p.horas}}.`,
+        solucion: (p) => { const total = p.numero * Math.pow(2, p.horas); return `${p.numero} \\times 2^{${p.horas}} = ${redondearCifrasSignificativas(total, 3)}`; }
       },
       {
         id: "b",
@@ -152,7 +161,10 @@ const EJERCICIOS = [
         tipo: "calculo",
         formato: "cientifica",
         calcularRespuesta: (p) => aFormaCientifica(p.numero * Math.pow(2, p.horas)),
-        puntos: 2
+        puntos: 2,
+        pista1: "Use el resultado del apartado (a).",
+        pista2: "Recuerde que \\(1 \\le a < 10\\).",
+        solucion: (p) => { const total = p.numero * Math.pow(2, p.horas); const r = aFormaCientifica(total); return `${redondearCifrasSignificativas(total, 3)} = ${r.a} \\times 10^{${r.k}}`; }
       },
       {
         id: "c",
@@ -190,7 +202,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => p.u1 + (p.n - 1) * p.d,
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Recuerde la fórmula del término general de una progresión aritmética: \\(u_n = u_1 + (n-1)d\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(d=${p.d}\\) y \\(n=${p.n}\\) en la fórmula.`,
+        solucion: (p) => `u_{${p.n}} = ${p.u1} + (${p.n}-1)(${p.d}) = ${p.u1 + (p.n - 1) * p.d}`
       },
       {
         id: "b",
@@ -200,7 +215,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d),
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Recuerde la fórmula de la suma de los primeros \\(n\\) términos: \\(S_n = \\dfrac{n}{2}(2u_1+(n-1)d)\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(d=${p.d}\\) y \\(n=${p.n}\\) en la fórmula anterior antes de operar.`,
+        solucion: (p) => { const s = (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d); return `S_{${p.n}} = \\dfrac{${p.n}}{2}(2(${p.u1})+(${p.n}-1)(${p.d})) = ${redondearCifrasSignificativas(s, 3)}`; }
       }
     ]
   },
@@ -225,7 +243,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => p.u1 + (p.n - 1) * p.d,
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Use la fórmula del término general: \\(u_n = u_1 + (n-1)d\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(d=${p.d}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => `u_{${p.n}} = ${p.u1} + (${p.n}-1)(${p.d}) = ${p.u1 + (p.n - 1) * p.d}`
       },
       {
         id: "b",
@@ -235,7 +256,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d),
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Use la fórmula de la suma: \\(S_n = \\dfrac{n}{2}(2u_1+(n-1)d)\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(d=${p.d}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => { const s = (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d); return `S_{${p.n}} = \\dfrac{${p.n}}{2}(2(${p.u1})+(${p.n}-1)(${p.d})) = ${redondearCifrasSignificativas(s, 3)}`; }
       },
       {
         id: "c",
@@ -245,7 +269,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => ((p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d)) / p.n,
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "El promedio es la suma total dividida entre el número de meses.",
+        pista2: (p) => `Ya tiene la suma del apartado (b); divídala entre ${p.n}.`,
+        solucion: (p) => { const s = (p.n / 2) * (2 * p.u1 + (p.n - 1) * p.d); return `\\dfrac{S_{${p.n}}}{${p.n}} = ${redondearCifrasSignificativas(s / p.n, 3)}`; }
       }
     ]
   },
@@ -264,7 +291,6 @@ EJERCICIOS.push(
       const suma = (n) => (n / 2) * (2 * u1 + (n - 1) * d);
       const sN0 = suma(n0);
       const sN0menos1 = suma(n0 - 1);
-      // meta elegida para que el mínimo n que la supera sea exactamente n0
       const meta = entero(Math.ceil(sN0menos1) + 1, Math.floor(sN0));
 
       return { nombre, u1, d, semanaEjemplo, n0, meta };
@@ -279,7 +305,10 @@ EJERCICIOS.push(
         formato: "decimal",
         calcularRespuesta: (p) => p.u1 + (p.semanaEjemplo - 1) * p.d,
         cifrasSignificativas: 3,
-        puntos: 2
+        puntos: 2,
+        pista1: "Use la fórmula del término general: \\(u_n = u_1+(n-1)d\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(d=${p.d}\\) y \\(n=${p.semanaEjemplo}\\).`,
+        solucion: (p) => `u_{${p.semanaEjemplo}} = ${p.u1} + (${p.semanaEjemplo}-1)(${p.d}) = ${p.u1 + (p.semanaEjemplo - 1) * p.d}`
       },
       {
         id: "b",
@@ -288,7 +317,10 @@ EJERCICIOS.push(
         tipo: "calculo",
         formato: "entero",
         calcularRespuesta: (p) => p.n0,
-        puntos: 3
+        puntos: 3,
+        pista1: "Necesita el menor \\(n\\) tal que \\(S_n = \\dfrac{n}{2}(2u_1+(n-1)d)\\) sea mayor que la meta.",
+        pista2: (p) => `Pruebe distintos valores de \\(n\\) con la fórmula de la suma hasta superar los ${p.meta} colones, o resuelva la inecuación \\(S_n > ${p.meta}\\).`,
+        solucion: (p) => `El menor \\(n\\) que cumple \\(S_n > ${p.meta}\\) es \\(n = ${p.n0}\\) semanas.`
       }
     ]
   }
