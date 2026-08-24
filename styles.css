@@ -203,6 +203,96 @@ body {
   color: var(--azul-oscuro);
 }
 
+/* Ejercicios de práctica */
+.ejercicio-contexto {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0.5rem 0 1rem;
+}
+
+.btn-reintentar {
+  background: none;
+  border: 1px solid var(--azul-medio);
+  border-radius: 6px;
+  color: var(--azul-medio);
+  font-size: 0.8rem;
+  padding: 3px 10px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.btn-reintentar:hover {
+  background: var(--azul-claro);
+}
+
+.formula-encabezado {
+  justify-content: space-between;
+}
+
+.apartado {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background: #f7fafc;
+  border-radius: 8px;
+}
+
+.input-decimal, .input-cientifica {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.input-decimal input, .input-cientifica input {
+  width: 90px;
+  padding: 5px 8px;
+  border: 1px solid var(--azul-medio);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.input-cientifica .input-k {
+  width: 60px;
+}
+
+.btn-verificar, .btn-ver-respuesta {
+  background: var(--azul-medio);
+  color: var(--blanco);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.btn-verificar:hover, .btn-ver-respuesta:hover {
+  background: var(--azul-oscuro);
+}
+
+.feedback {
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  min-height: 1.2em;
+}
+
+.feedback.correcto { color: #1a7a1a; }
+.feedback.incorrecto { color: #b3261e; }
+.feedback.aviso { color: #a15c00; }
+
+.respuesta-modelo {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: var(--azul-claro);
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.respuesta-modelo.oculto {
+  display: none;
+}
+
 /* Footer */
 .app-footer {
   text-align: center;

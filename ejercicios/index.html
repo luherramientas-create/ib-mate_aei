@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ejercicios de práctica — Lu Herramientas</title>
   <link rel="stylesheet" href="../styles.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
 </head>
 <body>
 
@@ -14,13 +18,23 @@
     <p class="subtitle">Aplicaciones e Interpretación — Nivel Medio</p>
   </header>
 
-  <main class="contenido">
-    <p class="placeholder">Próximamente — esta sección está en construcción.</p>
+  <nav class="tema-nav">
+    <button class="tema-btn" data-tema="1">Tema 1<span>Aritmética y álgebra</span></button>
+    <button class="tema-btn" data-tema="2">Tema 2<span>Funciones</span></button>
+    <button class="tema-btn" data-tema="3">Tema 3<span>Geometría y trigonometría</span></button>
+    <button class="tema-btn" data-tema="4">Tema 4<span>Estadística y probabilidad</span></button>
+    <button class="tema-btn" data-tema="5">Tema 5<span>Análisis</span></button>
+  </nav>
+
+  <main id="contenido" class="contenido">
+    <p class="placeholder">Cargando...</p>
   </main>
 
   <footer class="app-footer">
-    <p>Lu Herramientas — material de apoyo del IB.</p>
+    <p>Lu Herramientas — ejercicios originales, inspirados en el estilo de examen del IB.</p>
   </footer>
 
+  <script src="data.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
