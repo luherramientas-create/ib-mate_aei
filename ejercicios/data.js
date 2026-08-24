@@ -326,3 +326,148 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 1.3 (Progresiones geométricas) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-1.3-001",
+    subtema: "1.3",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      u1: entero(3, 20),
+      r: elegir([2, 3, 0.5, 1.5, 2.5]),
+      n: entero(4, 9)
+    }),
+    contexto: (p) => `En una progresión geométrica, el primer término es \\(u_1 = ${p.u1}\\) y la razón común es \\(r = ${p.r}\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `el ${p.n}.º término de la progresión.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.u1 * Math.pow(p.r, p.n - 1),
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Recuerde la fórmula del término general de una progresión geométrica: \\(u_n = u_1 r^{n-1}\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(r=${p.r}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => { const r = p.u1 * Math.pow(p.r, p.n - 1); return `u_{${p.n}} = ${p.u1} \\times (${p.r})^{${p.n}-1} = ${redondearCifrasSignificativas(r, 3)}`; }
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: (p) => `la suma de los primeros ${p.n} términos de la progresión.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.u1 * (Math.pow(p.r, p.n) - 1) / (p.r - 1),
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Recuerde la fórmula de la suma: \\(S_n = \\dfrac{u_1(r^n-1)}{r-1}\\).",
+        pista2: (p) => `Sustituya \\(u_1=${p.u1}\\), \\(r=${p.r}\\) y \\(n=${p.n}\\) en la fórmula.`,
+        solucion: (p) => { const s = p.u1 * (Math.pow(p.r, p.n) - 1) / (p.r - 1); return `S_{${p.n}} = \\dfrac{${p.u1}((${p.r})^{${p.n}}-1)}{${p.r}-1} = ${redondearCifrasSignificativas(s, 3)}`; }
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.3-002",
+    subtema: "1.3",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const poblacionInicial = entero(200, 2000);
+      const tasaPorcentual = entero(3, 15);
+      const r = 1 + tasaPorcentual / 100;
+      const n = entero(5, 12);
+
+      const valorEn = (t) => poblacionInicial * Math.pow(r, t);
+      const n0 = entero(5, 12);
+      const vN0 = valorEn(n0);
+      const vN0menos1 = valorEn(n0 - 1);
+      const meta = entero(Math.ceil(vN0menos1) + 1, Math.floor(vN0));
+
+      return { nombre, poblacionInicial, tasaPorcentual, r, n, n0, meta };
+    },
+    contexto: (p) => `La población de un pueblo crece geométricamente. Actualmente hay ${p.poblacionInicial.toLocaleString('es-CR')} habitantes, y se estima que la población aumenta un ${p.tasaPorcentual}% cada año.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `la población estimada dentro de ${p.n} años.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.poblacionInicial * Math.pow(p.r, p.n),
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "La población sigue el modelo \\(P_n = P_0 \\times r^{n}\\), donde \\(r = 1+\\dfrac{\\text{tasa}}{100}\\).",
+        pista2: (p) => `Aquí \\(P_0=${p.poblacionInicial}\\), \\(r=${p.r.toFixed(2)}\\) y \\(n=${p.n}\\).`,
+        solucion: (p) => { const v = p.poblacionInicial * Math.pow(p.r, p.n); return `P_{${p.n}} = ${p.poblacionInicial} \\times (${p.r.toFixed(2)})^{${p.n}} = ${redondearCifrasSignificativas(v, 3)}`; }
+      },
+      {
+        id: "b",
+        verboMando: "Calcule",
+        enunciado: (p) => `el número mínimo de años completos para que la población supere los ${p.meta.toLocaleString('es-CR')} habitantes.`,
+        tipo: "calculo",
+        formato: "entero",
+        calcularRespuesta: (p) => p.n0,
+        puntos: 3,
+        pista1: "Necesita el menor \\(n\\) entero tal que \\(P_0 \\times r^{n}\\) sea mayor que la meta.",
+        pista2: (p) => `Puede resolver \\(n > \\dfrac{\\log(\\text{meta}/P_0)}{\\log r}\\), o probar valores de \\(n\\) directamente hasta superar ${p.meta.toLocaleString('es-CR')}.`,
+        solucion: (p) => `El menor \\(n\\) que cumple la condición es \\(n = ${p.n0}\\) años.`
+      }
+    ]
+  },
+
+  {
+    id: "ej-1.3-003",
+    subtema: "1.3",
+    tipoEjercicio: "aislado",
+    generarParametros: () => ({
+      alturaInicial: entero(80, 300),
+      porcentaje: entero(40, 80),
+      rebote: entero(2, 5),
+      n: entero(5, 10)
+    }),
+    contexto: (p) => `Se deja caer una pelota desde una altura inicial de ${p.alturaInicial} cm. Cada vez que rebota, alcanza el ${p.porcentaje}% de la altura del rebote anterior.`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `la altura que alcanza la pelota en el ${p.rebote}.º rebote.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.alturaInicial * Math.pow(p.porcentaje / 100, p.rebote),
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Tras el primer rebote, la altura es \\(h_0 \\times r\\); tras el segundo, \\(h_0 \\times r^2\\); y así sucesivamente, donde \\(r\\) es la razón (el porcentaje como decimal).",
+        pista2: (p) => `Aquí \\(h_0=${p.alturaInicial}\\) y \\(r=${(p.porcentaje / 100).toFixed(2)}\\). Calcule \\(h_0 \\times r^{${p.rebote}}\\).`,
+        solucion: (p) => { const v = p.alturaInicial * Math.pow(p.porcentaje / 100, p.rebote); return `${p.alturaInicial} \\times (${(p.porcentaje / 100).toFixed(2)})^{${p.rebote}} = ${redondearCifrasSignificativas(v, 3)}\\text{ cm}`; }
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: (p) => `la suma de las alturas alcanzadas en los primeros ${p.n} rebotes.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => {
+          const r = p.porcentaje / 100;
+          const u1 = p.alturaInicial * r; // altura del primer rebote
+          return u1 * (1 - Math.pow(r, p.n)) / (1 - r);
+        },
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Las alturas de los rebotes forman una progresión geométrica cuyo primer término es la altura del primer rebote (\\(h_0 \\times r\\)), con razón \\(r\\).",
+        pista2: (p) => `Use \\(S_n=\\dfrac{u_1(1-r^n)}{1-r}\\), con \\(u_1 = ${p.alturaInicial} \\times ${(p.porcentaje / 100).toFixed(2)}\\) y \\(r=${(p.porcentaje / 100).toFixed(2)}\\).`,
+        solucion: (p) => {
+          const r = p.porcentaje / 100;
+          const u1 = p.alturaInicial * r;
+          const s = u1 * (1 - Math.pow(r, p.n)) / (1 - r);
+          return `S_{${p.n}} = \\dfrac{${redondearCifrasSignificativas(u1,3)}(1-(${r.toFixed(2)})^{${p.n}})}{1-${r.toFixed(2)}} = ${redondearCifrasSignificativas(s, 3)}\\text{ cm}`;
+        }
+      }
+    ]
+  }
+
+);
