@@ -1342,3 +1342,151 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 2.2 (Función, dominio, recorrido, función inversa) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-2.2-001",
+    subtema: "2.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const a = elegir([2, 3, 4, 5, 6, -2, -3, -4]);
+      const b = entero(-5, 5);
+      const xMin = entero(-10, -6);
+      const xMax = entero(6, 12);
+      const valorEval = elegir([xMin, xMax, entero(1, 5)].filter(v => v !== 0));
+      // Elegimos un valor de salida "y" que sí corresponda a un x entero dentro del dominio
+      const xInversaObjetivo = elegir([2, -2, 3, -3, 4].filter(v => v >= xMin && v <= xMax && v !== 0));
+      const valorInversa = a / xInversaObjetivo + b;
+      return { a, b, xMin, xMax, valorEval, valorInversa };
+    },
+    contexto: (p) => `Se define la función \\(f(x) = \\dfrac{${p.a}}{x} + ${p.b}\\), para \\(${p.xMin} \\le x \\le ${p.xMax}\\), \\(x \\neq 0\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `\\(f(${p.valorEval})\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.a / p.valorEval + p.b,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Sustituya el valor dado directamente en la expresión de \\(f(x)\\).",
+        pista2: (p) => `Calcule \\(\\dfrac{${p.a}}{${p.valorEval}} + ${p.b}\\).`,
+        solucion: (p) => `f(${p.valorEval}) = \\dfrac{${p.a}}{${p.valorEval}} + ${p.b} = ${redondearCifrasSignificativas(p.a / p.valorEval + p.b, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: (p) => `\\(f^{-1}(${redondearCifrasSignificativas(p.valorInversa,3)})\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => {
+          // resolver a/x + b = valorInversa  =>  x = a / (valorInversa - b)
+          return p.a / (p.valorInversa - p.b);
+        },
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Halle \\(f^{-1}(k)\\) resolviendo la ecuación \\(f(x)=k\\) para \\(x\\).",
+        pista2: (p) => `Resuelva \\(\\dfrac{${p.a}}{x} + ${p.b} = ${redondearCifrasSignificativas(p.valorInversa,3)}\\) para \\(x\\).`,
+        solucion: (p) => `x = \\dfrac{${p.a}}{${redondearCifrasSignificativas(p.valorInversa,3)} - (${p.b})} = ${redondearCifrasSignificativas(p.a / (p.valorInversa - p.b), 3)}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-2.2-002",
+    subtema: "2.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const nombre = elegir(NOMBRES);
+      const a = entero(800, 2500);
+      const b = entero(500, 3000);
+      const dEval = entero(2, 10);
+      const costoDado = a * entero(4, 12) + b; // garantiza un número de días entero exacto
+      return { nombre, a, b, dEval, costoDado };
+    },
+    contexto: (p) => `${p.nombre} alquila una bicicleta. El costo total, en colones, de alquilarla durante \\(d\\) días se modela con \\(C(d) = ${p.a}d + ${p.b}\\), para \\(d \\ge 0\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Calcule",
+        enunciado: (p) => `el costo de alquilar la bicicleta durante ${p.dEval} días.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.a * p.dEval + p.b,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Sustituya \\(d\\) por el número de días en la fórmula de \\(C(d)\\).",
+        pista2: (p) => `Calcule \\(${p.a}(${p.dEval}) + ${p.b}\\).`,
+        solucion: (p) => `C(${p.dEval}) = ${p.a}(${p.dEval}) + ${p.b} = ${redondearCifrasSignificativas(p.a * p.dEval + p.b, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Interprete",
+        enunciado: (p) => `el significado del valor ${p.b} en este contexto.`,
+        tipo: "interpretacion",
+        respuestaModelo: (p) => `El valor ${p.b} representa el costo fijo de alquilar la bicicleta (el cargo inicial que se paga incluso si el número de días fuera 0), ya que es el valor de \\(C(d)\\) cuando \\(d=0\\).`,
+        puntos: 1
+      },
+      {
+        id: "c",
+        verboMando: "Calcule",
+        enunciado: (p) => `el número de días que alquiló la bicicleta ${p.nombre}, si el costo total fue de ${p.costoDado.toLocaleString('es-CR')} colones.`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => (p.costoDado - p.b) / p.a,
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Esto equivale a hallar \\(C^{-1}(${p.costoDado})\\): resuelva \\(C(d)=${p.costoDado}\\) para \\(d\\).",
+        pista2: (p) => `Resuelva \\(${p.a}d + ${p.b} = ${p.costoDado}\\).`,
+        solucion: (p) => `d = \\dfrac{${p.costoDado} - ${p.b}}{${p.a}} = ${redondearCifrasSignificativas((p.costoDado - p.b) / p.a, 3)}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-2.2-003",
+    subtema: "2.2",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const a = entero(1, 6);
+      const b = entero(3, 15);
+      const kResultado = entero(1, 6); // valor de (x-a) bajo la raíz, un cuadrado perfecto pequeño
+      const valorEval = b + Math.sqrt(kResultado); // así f^{-1}(valorEval) da un resultado exacto
+      return { a, b, valorEval, kResultado };
+    },
+    contexto: (p) => `Se define la función \\(h(x) = \\sqrt{x - ${p.a}} + ${p.b}\\), para \\(x \\ge ${p.a}\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: (p) => `\\(h^{-1}(${redondearCifrasSignificativas(p.valorEval,3)})\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => Math.pow(p.valorEval - p.b, 2) + p.a,
+        cifrasSignificativas: 3,
+        puntos: 3,
+        pista1: "Resuelva \\(h(x)=k\\) para \\(x\\): despeje la raíz cuadrada y luego eleve al cuadrado ambos lados.",
+        pista2: (p) => `Resuelva \\(\\sqrt{x-${p.a}} + ${p.b} = ${redondearCifrasSignificativas(p.valorEval,3)}\\).`,
+        solucion: (p) => `x = (${redondearCifrasSignificativas(p.valorEval,3)} - ${p.b})^2 + ${p.a} = ${redondearCifrasSignificativas(Math.pow(p.valorEval - p.b, 2) + p.a, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Escriba",
+        enunciado: () => `el valor mínimo del dominio de \\(h^{-1}(x)\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.b,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "El dominio de \\(h^{-1}(x)\\) es igual al recorrido de \\(h(x)\\).",
+        pista2: (p) => `Como \\(\\sqrt{x-${p.a}} \\ge 0\\), el recorrido de \\(h(x)\\) es \\(h(x) \\ge ${p.b}\\).`,
+        solucion: (p) => `\\text{El dominio de } h^{-1}(x) \\text{ es } x \\ge ${p.b}, \\text{ así que el valor mínimo es } ${p.b}.`
+      }
+    ]
+  }
+
+);
