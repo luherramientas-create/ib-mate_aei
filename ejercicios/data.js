@@ -1147,3 +1147,198 @@ EJERCICIOS.push(
   }
 
 );
+
+// ---------- Ejercicios de 2.1 (Ecuaciones de la recta, pendiente) ----------
+
+EJERCICIOS.push(
+
+  {
+    id: "ej-2.1-001",
+    subtema: "2.1",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      let xA, yA, xB, yB;
+      do {
+        xA = entero(-8, 8); yA = entero(-8, 8);
+        xB = entero(-8, 8); yB = entero(-8, 8);
+      } while (xA === xB);
+      const m = (yB - yA) / (xB - xA);
+      const c = yA - m * xA;
+      return { xA, yA, xB, yB, m, c };
+    },
+    contexto: (p) => `La recta \\(l\\) pasa por los puntos \\(A(${p.xA}, ${p.yA})\\) y \\(B(${p.xB}, ${p.yB})\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `la pendiente de la recta \\(l\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.m,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la fórmula de la pendiente: \\(m = \\dfrac{y_2-y_1}{x_2-x_1}\\).",
+        pista2: (p) => `Sustituya los puntos \\(A(${p.xA},${p.yA})\\) y \\(B(${p.xB},${p.yB})\\).`,
+        solucion: (p) => `m = \\dfrac{${p.yB}-${p.yA}}{${p.xB}-${p.xA}} = ${redondearCifrasSignificativas(p.m, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(c\\) en la ecuación de la recta \\(l\\), escrita en la forma \\(y=mx+c\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.c,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la pendiente hallada en (a) y sustituya uno de los puntos en \\(y=mx+c\\) para despejar \\(c\\).",
+        pista2: (p) => `Sustituya el punto \\(A(${p.xA},${p.yA})\\): \\(${p.yA} = (${redondearCifrasSignificativas(p.m,3)})(${p.xA}) + c\\).`,
+        solucion: (p) => `c = ${p.yA} - (${redondearCifrasSignificativas(p.m,3)})(${p.xA}) = ${redondearCifrasSignificativas(p.c, 3)}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-2.1-002",
+    subtema: "2.1",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      let xA, yA, xC, yC, slopeAC;
+      do {
+        xA = entero(-8, 8); yA = entero(-8, 8);
+        xC = entero(-8, 8); yC = entero(-8, 8);
+        slopeAC = (xC !== xA) ? (yC - yA) / (xC - xA) : 0;
+      } while (xA === xC || slopeAC === 0);
+
+      const slopeL = -1 / slopeAC;
+      const xM = (xA + xC) / 2;
+      const yM = (yA + yC) / 2;
+      const c = yM - slopeL * xM;
+      const xIntercepto = -c / slopeL;
+
+      return { xA, yA, xC, yC, slopeAC, slopeL, xM, yM, c, xIntercepto };
+    },
+    contexto: (p) => `Los puntos \\(A(${p.xA}, ${p.yA})\\) y \\(C(${p.xC}, ${p.yC})\\) son los extremos de un segmento. La recta \\(l\\) es perpendicular a \\(AC\\) y pasa por el punto medio de \\(AC\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `la pendiente de la recta \\(AC\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.slopeAC,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la fórmula de la pendiente: \\(m = \\dfrac{y_2-y_1}{x_2-x_1}\\).",
+        pista2: (p) => `Sustituya \\(A(${p.xA},${p.yA})\\) y \\(C(${p.xC},${p.yC})\\).`,
+        solucion: (p) => `m_{AC} = \\dfrac{${p.yC}-${p.yA}}{${p.xC}-${p.xA}} = ${redondearCifrasSignificativas(p.slopeAC, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Halle",
+        enunciado: () => `la pendiente de la recta \\(l\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.slopeL,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Dos rectas son perpendiculares cuando el producto de sus pendientes es \\(-1\\): \\(m_l = -\\dfrac{1}{m_{AC}}\\).",
+        pista2: (p) => `Use el valor de \\(m_{AC}\\) del apartado (a).`,
+        solucion: (p) => `m_l = -\\dfrac{1}{${redondearCifrasSignificativas(p.slopeAC,3)}} = ${redondearCifrasSignificativas(p.slopeL, 3)}`
+      },
+      {
+        id: "c",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(c\\) en la ecuación de la recta \\(l\\), en la forma \\(y=mx+c\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.c,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "La recta \\(l\\) pasa por el punto medio de \\(AC\\). Halle primero ese punto medio.",
+        pista2: (p) => `El punto medio de \\(AC\\) es \\((${p.xM}, ${p.yM})\\). Sustitúyalo junto con \\(m_l\\) en \\(y=mx+c\\) para despejar \\(c\\).`,
+        solucion: (p) => `\\text{Punto medio}=(${p.xM},${p.yM}) \\Rightarrow c = ${p.yM} - (${redondearCifrasSignificativas(p.slopeL,3)})(${p.xM}) = ${redondearCifrasSignificativas(p.c, 3)}`
+      },
+      {
+        id: "d",
+        verboMando: "Halle",
+        enunciado: () => `el valor de \\(x\\) donde la recta \\(l\\) corta al eje \\(x\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.xIntercepto,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "En el eje \\(x\\), \\(y=0\\). Sustituya en la ecuación de \\(l\\) y despeje \\(x\\).",
+        pista2: (p) => `Resuelva \\(0 = (${redondearCifrasSignificativas(p.slopeL,3)})x + (${redondearCifrasSignificativas(p.c,3)})\\).`,
+        solucion: (p) => `x = -\\dfrac{${redondearCifrasSignificativas(p.c,3)}}{${redondearCifrasSignificativas(p.slopeL,3)}} = ${redondearCifrasSignificativas(p.xIntercepto, 3)}`
+      }
+    ]
+  },
+
+  {
+    id: "ej-2.1-003",
+    subtema: "2.1",
+    tipoEjercicio: "aislado",
+    generarParametros: () => {
+      const den1 = elegir([1, 2]);
+      const num1 = elegir([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
+      const m1 = num1 / den1;
+      const c1 = entero(-10, 10);
+
+      const caso = elegir(["paralela", "perpendicular", "ninguna"]);
+      let num2, den2;
+      if (caso === "paralela") {
+        num2 = num1; den2 = den1;
+      } else if (caso === "perpendicular") {
+        num2 = -den1; den2 = num1;
+      } else {
+        do {
+          den2 = elegir([1, 2, 3]);
+          num2 = elegir([-6, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 6]);
+        } while (Math.abs(num2 / den2 - m1) < 1e-9 || Math.abs((num2 / den2) * m1 + 1) < 1e-9);
+      }
+
+      const x1 = entero(-6, 6);
+      const y1 = entero(-6, 6);
+      const x2 = x1 + den2;
+      const y2 = y1 + num2;
+      const m2 = num2 / den2;
+
+      return { m1, c1, x1, y1, x2, y2, m2 };
+    },
+    contexto: (p) => `La recta \\(l_1\\) tiene ecuación \\(y = ${p.m1}x ${p.c1 >= 0 ? "+" : "-"} ${Math.abs(p.c1)}\\). La recta \\(l_2\\) pasa por los puntos \\(P(${p.x1}, ${p.y1})\\) y \\(Q(${p.x2}, ${p.y2})\\).`,
+    apartados: [
+      {
+        id: "a",
+        verboMando: "Halle",
+        enunciado: () => `la pendiente de la recta \\(l_2\\).`,
+        tipo: "calculo",
+        formato: "decimal",
+        calcularRespuesta: (p) => p.m2,
+        cifrasSignificativas: 3,
+        puntos: 2,
+        pista1: "Use la fórmula de la pendiente con los puntos \\(P\\) y \\(Q\\).",
+        pista2: (p) => `\\(m_{l_2} = \\dfrac{${p.y2}-${p.y1}}{${p.x2}-${p.x1}}\\).`,
+        solucion: (p) => `m_{l_2} = \\dfrac{${p.y2}-${p.y1}}{${p.x2}-${p.x1}} = ${redondearCifrasSignificativas(p.m2, 3)}`
+      },
+      {
+        id: "b",
+        verboMando: "Determine",
+        enunciado: () => `si las rectas \\(l_1\\) y \\(l_2\\) son paralelas, perpendiculares, o ninguna de las dos. Justifique su respuesta.`,
+        tipo: "interpretacion",
+        respuestaModelo: (p) => {
+          const esParalela = Math.abs(p.m1 - p.m2) < 1e-9;
+          const esPerpendicular = Math.abs(p.m1 * p.m2 + 1) < 1e-9;
+          if (esParalela) {
+            return `Las rectas son paralelas, porque tienen la misma pendiente: \\(m_1 = m_2 = ${p.m1}\\).`;
+          } else if (esPerpendicular) {
+            return `Las rectas son perpendiculares, porque el producto de sus pendientes es \\(m_1 \\times m_2 = ${(p.m1 * p.m2).toFixed(2)} = -1\\).`;
+          } else {
+            return `Las rectas no son paralelas ni perpendiculares: tienen pendientes distintas (\\(m_1=${p.m1}\\), \\(m_2=${redondearCifrasSignificativas(p.m2,3)}\\)) y su producto no es \\(-1\\) (\\(m_1 \\times m_2 = ${(p.m1 * p.m2).toFixed(2)}\\)).`;
+          }
+        },
+        puntos: 2
+      }
+    ]
+  }
+
+);
